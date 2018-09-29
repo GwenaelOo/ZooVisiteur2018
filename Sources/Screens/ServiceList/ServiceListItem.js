@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {RkCard} from 'react-native-ui-kitten';
 
 class ServiceListItem extends Component {
     static navigationOptions = {
-        title: 'Welcome to the APP',
+        title: 'ServiceListItem',
     };
     constructor(props) {
         super(props);
@@ -22,8 +23,8 @@ class ServiceListItem extends Component {
     render() {
         console.log(this.state.serviceData)
         return (
-            <View style={styles.container}>
-                <View>
+            <View>
+{/*                 <View>
                     <Text >
                         {this.props.serviceData.serviceName}
                     </Text>
@@ -39,7 +40,22 @@ class ServiceListItem extends Component {
                             style={{ width: this.state.width, height: this.state.height }}
                             source={{ uri: this.props.serviceData.serviceProfilePicture.largeThumb }} />
                     </TouchableOpacity>
-                </View>
+                </View> */}
+
+            <View>
+            <RkCard>
+            <View rkCardHeader>
+                <Text style={styles.header}>{this.props.serviceData.serviceName}</Text>
+            </View>
+            <TouchableOpacity onPress={this.HandlePress}> 
+            <Image rkCardImg source={{uri:this.props.serviceData.serviceProfilePicture.largeThumb}}/>
+            </TouchableOpacity> 
+            <View rkCardContent>
+                <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
+            </View>
+            </RkCard>
+            </View>
+
             </View>
         )
     }
@@ -48,19 +64,10 @@ class ServiceListItem extends Component {
 export default ServiceListItem;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-        /*         fontWeight: 'bold',
-                fontSize: 35,
-                marginLeft: 20,
-                marginTop: 0,
-                textAlign: 'left',
-                color: '#5E7FB1', */
+    header: {
+        fontSize: 30,
     },
-    type: {
-        /*  flex: 1, */
-        /*         margin: 20,
-                textAlign: 'left',
-                color: '#5E7FB1', */
-    },
+    card : {
+        padding: 15,
+    }
 });

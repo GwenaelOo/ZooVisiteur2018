@@ -1,12 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+
+import { config } from './config/config'
 
 // IMPORTATION DES ECRANS
 
 import ScreenGwenPlayground from './Sources/Screens/ScreenGwenPlayground/ScreenGwenPlayground'
 import ScreenTedPlayground from './Sources/Screens/ScreenTedPlayground/ScreenTedPlayground'
-import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
+
+import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
+import ScreenService from './Sources/Screens/ScreenService/ScreenService'
+import ScreenAnimation from './Sources/Screens/ScreenAnimation/ScreenAnimation'
+import ScreenSpecies from './Sources/Screens/ScreenSpecies/ScreenSpecies'
+
+import ScreenList from './Sources/Screens/ScreenList/ScreenList'
+
+import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
+
+import ScreenAnimal from './Sources/Screens/ScreenAnimal/ScreenAnimal'
+
 
 
 import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
@@ -18,6 +31,7 @@ import ScreenList from './Sources/Screens/ScreenList/ScreenList'
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
 import { firebaseConfig } from './config/config'
+import registerForPushNotificationsAsync from './Sources/Components/api/registerForPushNotificationsAsync'
 
 // IMPORTATION DES LIBRAIRIES
 
@@ -25,9 +39,11 @@ import * as firebase from 'firebase';
 
 firebase.initializeApp(firebaseConfig);
 
+registerForPushNotificationsAsync()
+
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to the APP',
+    title: 'Welcome to the awesome APP',
   };
   constructor(props) {
     super(props);
@@ -35,9 +51,33 @@ class HomeScreen extends React.Component {
     };
   }
 
+  createNotificationChannel() {
+    Expo.Notifications.createChannelAndroidAsync('chat-messages', {
+      name: 'BackendNotification',
+      priority: 'max',
+      sound: true,
+      vibrate: [0, 250, 250, 250],
+    });
+  }
+
+ 
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      this.createNotificationChannel()
+    }
+  }
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
+
+        <Button
+          title="ScreenSpecies"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenSpecies', {
+            });
+          }}
+        />
 
         <Button
           title="Aller à la page Event"
@@ -53,6 +93,7 @@ class HomeScreen extends React.Component {
           onPress={() => {
             this.props.navigation.navigate('ScreenList', {
               dataType: 'animation'
+<<<<<<< HEAD
             });
           }}
         /> 
@@ -62,11 +103,25 @@ class HomeScreen extends React.Component {
           onPress={() => {
             this.props.navigation.navigate('ScreenList', {
               dataType: 'service'
+=======
+>>>>>>> ccd8361fcfa276699eb4716108e8658b5200538b
             });
           }}
         />
 
         <Button
+<<<<<<< HEAD
+=======
+          title="Aller à la page Service"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenList', {
+              dataType: 'service'
+            });
+          }}
+        />
+
+        <Button
+>>>>>>> ccd8361fcfa276699eb4716108e8658b5200538b
           title="Aller à la page Ted Playground"
           onPress={() => {
             this.props.navigation.navigate('ScreenTedPlayground', {
@@ -88,6 +143,14 @@ class HomeScreen extends React.Component {
             });
           }}
         />
+        <Button
+          title="Animal Screen"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenAnimal', {
+            });
+          }}
+        />
+
       </View>
     );
   }
@@ -107,8 +170,26 @@ const Navigator = createStackNavigator({
   ScreenGwenPlayground: {
     screen: ScreenGwenPlayground
   },
-  ScreenTest: {
-    screen: ScreenTest
+  ScreenSpecie: {
+    screen: ScreenSpecie
+  },
+  ScreenList: {
+    screen: ScreenList
+  },
+  ScreenEvent: {
+    screen: ScreenEvent
+  },
+  ScreenService: {
+    screen: ScreenService
+  },
+  ScreenAnimation: {
+    screen: ScreenAnimation
+  },
+  ScreenSpecies: {
+    screen: ScreenSpecies
+  },
+  ScreenAnimal: {
+    screen: ScreenAnimal
   },
   ScreenList: {
     screen: ScreenList
@@ -125,6 +206,10 @@ const Navigator = createStackNavigator({
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ccd8361fcfa276699eb4716108e8658b5200538b
 }, {
     initialRouteName: 'Home',
     navigationOptions: {
