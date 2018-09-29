@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import LargeSeparator from '../Separator/LargeSeparator'
+import { TextTool } from '../../../Theme/style';
 
 export default class Description extends Component {
-  render() {
-    return (
-        <View>
-            <Text  style={styles.container}>{this.props.description}</Text>
-        </View>
-    )
+    render() {
+        return (
+            <View>
+                <LargeSeparator text={this.props.separatorText || 'Separateur'} />
+                <View>
+                    <Text style={[TextTool.PARAGRAPH, { marginHorizontal: 20 }]}>
+                        {this.props.description || 'Pas de description'}
+                    </Text>
+                </View>
+            </View>
+        )
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        fontWeight: 'bold',
-        fontSize: 18,
-        marginLeft: 20,
-        marginTop: 15,
-        textAlign: 'left',
-        color: '#5E7FB1',
-    },
-});

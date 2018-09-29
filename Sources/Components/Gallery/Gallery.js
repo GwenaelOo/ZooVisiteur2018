@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import GalleryItem from './GalleryItem'
+import LargeSeparator from '../Common/Separator/LargeSeparator';
 
 class Gallery extends React.Component {
     state = {
@@ -23,13 +24,16 @@ class Gallery extends React.Component {
         }
 
         return (
-            <ScrollView horizontal={true}>
-                <View style={styles.galleryContainer}>
-                    {
-                        list.map(function (item) { return <GalleryItem itemData={item} key={item.itemId} />; })
-                    }
-                </View>
-            </ScrollView>
+            <View>
+                <LargeSeparator text='Gallerie'/>
+                <ScrollView horizontal={true}>
+                    <View style={styles.galleryContainer}>
+                        {
+                            list.map(function (item) { return <GalleryItem itemData={item} key={item.itemId} />; })
+                        }
+                    </View>
+                </ScrollView>
+            </View>
         )
     }
 }

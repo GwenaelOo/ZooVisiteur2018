@@ -12,8 +12,12 @@ import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
 import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenService from './Sources/Screens/ScreenService/ScreenService'
 import ScreenAnimation from './Sources/Screens/ScreenAnimation/ScreenAnimation'
+import ScreenSpecies from './Sources/Screens/ScreenSpecies/ScreenSpecies'
 
 import ScreenList from './Sources/Screens/ScreenList/ScreenList'
+
+import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
+
 
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
@@ -40,6 +44,15 @@ class HomeScreen extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
         <Button
+          title="Aller à la page specie"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenSpecie', {
+              specieId: "CHIEN1537970805"
+            });
+          }}
+        />
+
+        <Button
           title="Aller à la page Event"
           onPress={() => {
             this.props.navigation.navigate('ScreenList', {
@@ -55,8 +68,8 @@ class HomeScreen extends React.Component {
               dataType: 'animation'
             });
           }}
-        /> 
-        
+        />
+
         <Button
           title="Aller à la page Service"
           onPress={() => {
@@ -88,6 +101,13 @@ class HomeScreen extends React.Component {
             });
           }}
         />
+                <Button
+          title="ScreenSpecies"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenSpecies', {
+            });
+          }}
+        />
       </View>
     );
   }
@@ -110,6 +130,9 @@ const Navigator = createStackNavigator({
   ScreenTest: {
     screen: ScreenTest
   },
+  ScreenSpecie: {
+    screen: ScreenSpecie
+  },
   ScreenList: {
     screen: ScreenList
   },
@@ -122,6 +145,10 @@ const Navigator = createStackNavigator({
   ScreenAnimation: {
     screen: ScreenAnimation
   },
+  ScreenSpecies: {
+    screen: ScreenSpecies
+  },
+
 
 
 

@@ -7,6 +7,9 @@ import Button1 from '../../Components/Common/Button/Button1'
 
 import firebase from 'firebase';
 
+import { colors } from '../../Theme/Theme';
+
+import ProfilePicture from '../../Components/Image/ProfilePicture'
 import Gallery from '../../Components/Gallery/Gallery'
 
 class ScreenAnimation extends React.Component {
@@ -20,7 +23,7 @@ class ScreenAnimation extends React.Component {
             height: Dimensions.get('window').height,
             image: '',
             titletext: 'Nom initial',
-            animationProfilePicture: '',
+            animationProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             animationName: '',
             animationDescription: '',
             animationPhoto: []
@@ -35,7 +38,7 @@ class ScreenAnimation extends React.Component {
             let remoteData = snap.val();
             self.setState({
                 animationName: remoteData.animationName,
-                animationProfilePicture: remoteData.animationProfilePicture,
+                animationProfilePicture: remoteData.animationProfilePicture.largeThumb,
                 animationDescription: remoteData.animationDescription,
                 animationPhotos: remoteData.animationPhotos,
             });
@@ -43,16 +46,15 @@ class ScreenAnimation extends React.Component {
     }
     componentWillMount() {
         this.readDataFromDatabase()
-    
     }
 
     render() {
         return (
-          <View style={styles.container }> 
+            <View style={styles.container}>
                 <ScrollView>
-                    <DefaultImage pic={this.state.animationProfilePicture} />
+                    <ProfilePicture img={this.state.animationProfilePicture} />
                     <Header1 title={this.state.animationName} />
-                    <Description description={this.state.animationDescription} />
+                    <Description description={this.state.animationDescription} separatorText='Description' />
                     <Button1 />
                     <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>
@@ -66,6 +68,8 @@ export default ScreenAnimation
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffff',
+        width: "100%",
+        backgroundColor: colors.BACKGROUND_COLOR,
+        alignItems: 'center',
     },
 });
