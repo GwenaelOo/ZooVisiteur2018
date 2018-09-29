@@ -25,7 +25,6 @@ class AnimalListRoundItem extends React.Component {
                         <Title text={this.props.animal.animalName} size="big" />
                         <LightTitle text={this.props.animal.animalSex + ' ' + this.props.animal.animalAge} size="big" />
                     </View>
-
                 </View>
             </TouchableOpacity>
         </View>

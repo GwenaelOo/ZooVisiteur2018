@@ -33,8 +33,10 @@ class SpecieCard extends React.Component {
 <RkCard>
   <View rkCardHeader>
     <Text style={styles.header}>{this.state.specieData.specieName.fr}</Text>
-  </View> 
+  </View>
+  <TouchableOpacity onPress={this.HandlePress}> 
   <Image rkCardImg source={{uri:this.state.specieData.specieProfilePicture.largeThumb}}/>
+  </TouchableOpacity> 
   <View rkCardContent>
     <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
   </View>
