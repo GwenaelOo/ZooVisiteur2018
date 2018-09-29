@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'rea
 
 class ServiceListItem extends Component {
     static navigationOptions = {
-        title: 'Welcome to the APP',
+        title: 'ServiceListItem',
     };
     constructor(props) {
         super(props);

@@ -12,6 +12,7 @@ import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
 import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenService from './Sources/Screens/ScreenService/ScreenService'
 import ScreenAnimation from './Sources/Screens/ScreenAnimation/ScreenAnimation'
+import ScreenSpecies from './Sources/Screens/ScreenSpecies/ScreenSpecies'
 
 import ScreenList from './Sources/Screens/ScreenList/ScreenList'
 
@@ -100,6 +101,13 @@ class HomeScreen extends React.Component {
             });
           }}
         />
+                <Button
+          title="ScreenSpecies"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenSpecies', {
+            });
+          }}
+        />
       </View>
     );
   }
@@ -137,6 +145,10 @@ const Navigator = createStackNavigator({
   ScreenAnimation: {
     screen: ScreenAnimation
   },
+  ScreenSpecies: {
+    screen: ScreenSpecies
+  },
+
 
 
 

@@ -1,20 +1,20 @@
 import React from 'react';
-import { View, Image, Dimensions } from 'react-native';
+import {View, Image, Dimensions} from 'react-native';
 
 class ProfilePicture extends React.Component {
     state = {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height / 1.5,
+        height: Dimensions.get('window').height /2,
     }
-
+  
     render() {
-        return (
-            <View>
-                <Image
-                    style={{ width: this.state.width, height: (this.state.height / 2.5) }}
-                    source={{ uri: this.props.img }}
-                />
-            </View>
+      return (
+        <View>
+            <Image
+                style={{width: this.state.width, height: this.state.height}} 
+                source={{uri: this.props.pic.largeThumb}}
+            />
+         </View>
         )
     }
 }

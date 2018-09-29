@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
-import ScreenImage from './ScreenImage';
+import DefaultImage from '../../Components/Image/image';
 import ScreenHeader from './ScreenHeader';
 import ScreenDescription from './ScreenDescription';
 import ScreenButton from './ScreenButton';
@@ -50,7 +50,7 @@ class ScreenTest extends React.Component {
         return (
           <View style={styles.container }> 
                 <ScrollView>
-                    <ScreenImage pic={this.state.serviceProfilePicture} />
+                    <DefaultImage pic={this.state.serviceProfilePicture} />
                     <ScreenHeader title={this.state.serviceName} />
                     <ScreenDescription description={this.state.serviceDescription} />
                     <ScreenButton />
