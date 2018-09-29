@@ -51,10 +51,10 @@ class ScreenSpecie extends React.Component {
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                /* specieName: remoteData.specieName, */
+                specieName: remoteData.specieName,
                 specieProfilePicture: remoteData.specieProfilePicture,
                 specieLatinName: remoteData.specieLatinName,
-                specieDescription: remoteData.specieDescription.fr,
+                specieDescription: remoteData.specieDescription,
                 speciePhotos: remoteData.speciePhotos,
                 specieAnimals: remoteData.specieAnimals
             });
@@ -70,6 +70,7 @@ class ScreenSpecie extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                     <ProfilePicture img={this.state.specieProfilePicture.largeThumb} />
+
                     <View style={{ marginLeft: 24 }}>
                         <Title text={this.state.specieName.fr} />
                         <LightTitle text={this.state.specieLatinName} />
@@ -77,7 +78,6 @@ class ScreenSpecie extends React.Component {
 
                     <Description description={this.state.specieDescription.fr} separatorText='A propos'/>
 
-    
                     <BasicButton text="En savoir plus" width="150" />
 
                     <Gallery galleryData={this.state.speciePhotos}/>
