@@ -46,7 +46,6 @@ class ScreenAnimation extends React.Component {
     }
     componentWillMount() {
         this.readDataFromDatabase()
-
     }
 
     render() {
@@ -55,7 +54,7 @@ class ScreenAnimation extends React.Component {
                 <ScrollView>
                     <ProfilePicture img={this.state.animationProfilePicture} />
                     <Header1 title={this.state.animationName} />
-                    <Description description={this.state.animationDescription} />
+                    <Description description={this.state.animationDescription} separatorText='Description' />
                     <Button1 />
                     <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>

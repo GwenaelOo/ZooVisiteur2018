@@ -15,6 +15,9 @@ import ScreenAnimation from './Sources/Screens/ScreenAnimation/ScreenAnimation'
 
 import ScreenList from './Sources/Screens/ScreenList/ScreenList'
 
+import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
+
+
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
 import { firebaseConfig } from './config/config'
@@ -40,6 +43,15 @@ class HomeScreen extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
         <Button
+          title="Aller à la page specie"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenSpecie', {
+              specieId: "CHIEN1537970805"
+            });
+          }}
+        />
+
+        <Button
           title="Aller à la page Event"
           onPress={() => {
             this.props.navigation.navigate('ScreenList', {
@@ -55,8 +67,8 @@ class HomeScreen extends React.Component {
               dataType: 'animation'
             });
           }}
-        /> 
-        
+        />
+
         <Button
           title="Aller à la page Service"
           onPress={() => {
@@ -109,6 +121,9 @@ const Navigator = createStackNavigator({
   },
   ScreenTest: {
     screen: ScreenTest
+  },
+  ScreenSpecie: {
+    screen: ScreenSpecie
   },
   ScreenList: {
     screen: ScreenList

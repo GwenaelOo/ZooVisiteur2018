@@ -25,7 +25,7 @@ class Gallery extends React.Component {
 
         return (
             <View>
-                <LargeSeparator text='Description'/>
+                <LargeSeparator text='Gallerie'/>
                 <ScrollView horizontal={true}>
                     <View style={styles.galleryContainer}>
                         {
