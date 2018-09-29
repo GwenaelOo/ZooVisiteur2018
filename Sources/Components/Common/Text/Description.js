@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import LargeSeparator from '../Separator/LargeSeparator'
 
 export default class Description extends Component {
-  render() {
-    return (
-        <View>
-            <Text  style={styles.container}>{this.props.description}</Text>
-        </View>
-    )
+    render() {
+        return (
+            <View>
+                <LargeSeparator text='Description'/>
+                <View>
+                    <Text style={styles.container}>{this.props.description}</Text>
+                </View>
+            </View>
+        )
     }
 }
 
