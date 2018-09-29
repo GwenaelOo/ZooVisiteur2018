@@ -4,34 +4,31 @@ import RoundThumbnail from '../../../Components/Image/RoundThumbnail';
 import Title from '../../../Components/Common/Text/Title';
 import LightTitle from '../../../Components/Common/Text/LightTitle';
 
+
 class AnimalListRoundItem extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.HandlePress = this.HandlePress.bind(this)
-    }
-    
-    HandlePress() {
-       this.props.HandleSelection(this.props.animal.animalId)
-    }
-
     render() {
-        console.log(this.props.animal.animalId)
-        return (
-            <View>
-                <TouchableOpacity
-                    onPress={this.HandlePress}
-                >
-                    <View style={styles.AnimalItem}>
 
-                        <RoundThumbnail uri={this.props.animal.animalProfilePicture} />
-                        <View style={{ marginLeft: 24 }}>
-                            <Title text={this.props.animal.animalName} size="big" />
-                            <LightTitle text={this.props.animal.animalSex + ' ' + this.props.animal.animalAge} size="big" />
-                        </View>
+        return (
+        <View>
+            <TouchableOpacity 
+            // onPress={() => {
+            //     this.props.navigation.navigate('ScreenAnimal', {
+            //         animalId: this.props.animal.animalId,
+            //         specieId: this.props.animal.specieId,
+            //     })
+            // }}
+            >
+            <View style={styles.AnimalItem}>
+                    
+                    <RoundThumbnail uri={this.props.animal.animalProfilePicture} />
+                    <View style={{ marginLeft: 24 }}>
+                        <Title text={this.props.animal.animalName} size="big" />
+                        <LightTitle text={this.props.animal.animalSex + ' ' + this.props.animal.animalAge} size="big" />
                     </View>
-                </TouchableOpacity>
-            </View>
+
+                </View>
+            </TouchableOpacity>
+        </View>
         );
     }
 }

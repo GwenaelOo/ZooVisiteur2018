@@ -6,7 +6,6 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import { colors } from '../../Theme/Theme';
-import { config } from '../../../config/config'
 
 import firebase from 'firebase';
 
@@ -16,7 +15,9 @@ import Title from '../../Components/Common/Text/Title';
 import LightTitle from '../../Components/Common/Text/LightTitle';
 import BasicButton from '../../Components/Common/Button/BasicButton';
 import AnimalListRound from './AnimalListRound/AnimalListRound';
-import BlogWidget from '../../Components/Blog/BlogWidget';
+
+
+
 
 class ScreenSpecie extends React.Component {
     static navigationOptions = {
@@ -32,79 +33,58 @@ class ScreenSpecie extends React.Component {
             specieProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
 
             specieDescription: '',
-            speciePhotos: {},
-            specieAnimals: {},
+            speciePhotos: [],
 
             specieName: '',
             specieLatinName: '',
 
-            articles: []
+            specieAnimals: []
 
+       
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
-        this.HandleSelection = this.HandleSelection.bind(this)
-        this.getAticles = this.getAticles.bind(this)
-    }
-    getAticles() {
-        var self = this;
-        var ref = firebase.database().ref(config.zooId + '/articlesData/')
-        ref.once('value').then(snap => {
-            let remoteData = snap.val();
-            self.setState({
-                articles: remoteData
-            });
-        });
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref(config.zooId + '/speciesData/' + this.state.specieId)
+        var ref = firebase.database().ref('AkongoFakeZoo/speciesData/' + this.state.specieId)
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
                 specieName: remoteData.specieName,
                 specieProfilePicture: remoteData.specieProfilePicture,
+                specieName: remoteData.specieName.fr,
                 specieLatinName: remoteData.specieLatinName,
                 specieDescription: remoteData.specieDescription,
-                speciePhotos: remoteData.speciePhotos || {},
-                specieAnimals: remoteData.specieAnimals || {},
+                speciePhotos: remoteData.speciePhotos,
+                specieAnimals: remoteData.specieAnimals
             });
         });
     }
-
-    HandleSelection(selectedAnimalId) {
-         this.props.navigation.navigate('ScreenAnimal', {
-            animalId: selectedAnimalId,
-            specieId: this.state.specieId,
-        }) 
-
-    }
-
     componentWillMount() {
         this.readDataFromDatabase()
-        this.getAticles()
-    }
-    render() {
 
+    }
+
+    render() {
         return (
             <View style={styles.container}>
                 <ScrollView>
                     <ProfilePicture img={this.state.specieProfilePicture.largeThumb} />
 
                     <View style={{ marginLeft: 24 }}>
-                        <Title text={this.state.specieName.fr} />
+                        <Title text={this.state.specieName} />
                         <LightTitle text={this.state.specieLatinName} />
                     </View>
 
-                    <Description description={this.state.specieDescription.fr} separatorText='A propos' />
+                    <Description description={this.state.specieDescription} separatorText='A propos'/>
 
+    
                     <BasicButton text="En savoir plus" width="150" />
 
-                    <Gallery galleryData={this.state.speciePhotos} />
+                    <Gallery galleryData={this.state.speciePhotos}/>
 
-                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} HandleSelection={this.HandleSelection}/> 
-                    
-                    <BlogWidget articlesData={this.state.articles} />
+                    {/* <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals}/> */}
 
                 </ScrollView>
             </View>
@@ -122,4 +102,3 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
-

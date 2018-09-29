@@ -34,6 +34,19 @@ class Gallery extends React.Component {
                 null
             )
         }
+
+        return (
+            <View>
+                <LargeSeparator text='Gallerie'/>
+                <ScrollView horizontal={true}>
+                    <View style={styles.galleryContainer}>
+                        {
+                            list.map(function (item) { return <GalleryItem itemData={item} key={item.itemId} />; })
+                        }
+                    </View>
+                </ScrollView>
+            </View>
+        )
     }
 }
 

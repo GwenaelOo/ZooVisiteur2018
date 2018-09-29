@@ -1,8 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Platform, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
-
-import { config } from './config/config'
 
 // IMPORTATION DES ECRANS
 
@@ -21,13 +19,6 @@ import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
 import ScreenAnimal from './Sources/Screens/ScreenAnimal/ScreenAnimal'
 
 
-
-import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
-import ScreenService from './Sources/Screens/ScreenService/ScreenService'
-import ScreenAnimation from './Sources/Screens/ScreenAnimation/ScreenAnimation'
-
-import ScreenList from './Sources/Screens/ScreenList/ScreenList'
-
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
 import { firebaseConfig } from './config/config'
@@ -38,7 +29,6 @@ import registerForPushNotificationsAsync from './Sources/Components/api/register
 import * as firebase from 'firebase';
 
 firebase.initializeApp(firebaseConfig);
-
 registerForPushNotificationsAsync()
 
 class HomeScreen extends React.Component {
@@ -51,8 +41,8 @@ class HomeScreen extends React.Component {
     };
   }
 
-  createNotificationChannel() {
-    Expo.Notifications.createChannelAndroidAsync('chat-messages', {
+  createNotificationChannel(){
+    Expo.Notifications.createChannelAndroidAsync('Notification default', {
       name: 'BackendNotification',
       priority: 'max',
       sound: true,
@@ -60,10 +50,9 @@ class HomeScreen extends React.Component {
     });
   }
 
- 
-  componentWillMount() {
+  componentWillMount(){
     if (Platform.OS === 'android') {
-      this.createNotificationChannel()
+     this.createNotificationChannel()
     }
   }
 
@@ -93,25 +82,11 @@ class HomeScreen extends React.Component {
           onPress={() => {
             this.props.navigation.navigate('ScreenList', {
               dataType: 'animation'
-<<<<<<< HEAD
-            });
-          }}
-        /> 
-        
-        <Button
-          title="Aller à la page Service"
-          onPress={() => {
-            this.props.navigation.navigate('ScreenList', {
-              dataType: 'service'
-=======
->>>>>>> ccd8361fcfa276699eb4716108e8658b5200538b
             });
           }}
         />
 
         <Button
-<<<<<<< HEAD
-=======
           title="Aller à la page Service"
           onPress={() => {
             this.props.navigation.navigate('ScreenList', {
@@ -121,7 +96,6 @@ class HomeScreen extends React.Component {
         />
 
         <Button
->>>>>>> ccd8361fcfa276699eb4716108e8658b5200538b
           title="Aller à la page Ted Playground"
           onPress={() => {
             this.props.navigation.navigate('ScreenTedPlayground', {
@@ -143,7 +117,7 @@ class HomeScreen extends React.Component {
             });
           }}
         />
-        <Button
+                <Button
           title="Animal Screen"
           onPress={() => {
             this.props.navigation.navigate('ScreenAnimal', {
@@ -191,25 +165,10 @@ const Navigator = createStackNavigator({
   ScreenAnimal: {
     screen: ScreenAnimal
   },
-  ScreenList: {
-    screen: ScreenList
-  },
-  ScreenEvent: {
-    screen: ScreenEvent
-  },
-  ScreenService: {
-    screen: ScreenService
-  },
-  ScreenAnimation: {
-    screen: ScreenAnimation
-  },
 
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ccd8361fcfa276699eb4716108e8658b5200538b
 }, {
     initialRouteName: 'Home',
     navigationOptions: {
