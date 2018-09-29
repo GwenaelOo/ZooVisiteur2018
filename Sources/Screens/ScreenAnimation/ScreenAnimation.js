@@ -9,9 +9,9 @@ import firebase from 'firebase';
 
 import Gallery from '../../Components/Gallery/Gallery'
 
-class ScreenEvent extends React.Component {
+class ScreenAnimation extends React.Component {
     static navigationOptions = {
-        title: 'Event Screen',
+        title: 'Animation Screen',
     };
     constructor(props) {
         super(props);
@@ -20,24 +20,24 @@ class ScreenEvent extends React.Component {
             height: Dimensions.get('window').height,
             image: '',
             titletext: 'Nom initial',
-            eventProfilePicture: '',
-            eventName: '',
-            eventDescription: '',
-            eventPhoto: []
+            animationProfilePicture: '',
+            animationName: '',
+            animationDescription: '',
+            animationPhoto: []
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/eventsData/' + this.props.navigation.getParam('eventId', null))
+        var ref = firebase.database().ref('AkongoFakeZoo/animationsData/' + this.props.navigation.getParam('animationId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                eventName: remoteData.eventName,
-                eventProfilePicture: remoteData.eventProfilePicture,
-                eventDescription: remoteData.eventDescription,
-                eventPhotos: remoteData.eventPhotos,
+                animationName: remoteData.animationName,
+                animationProfilePicture: remoteData.animationProfilePicture,
+                animationDescription: remoteData.animationDescription,
+                animationPhotos: remoteData.animationPhotos,
             });
         });
     }
@@ -50,18 +50,18 @@ class ScreenEvent extends React.Component {
         return (
           <View style={styles.container }> 
                 <ScrollView>
-                    <DefaultImage pic={this.state.eventProfilePicture} />
-                    <Header1 title={this.state.eventName} />
-                    <Description description={this.state.eventDescription} />
+                    <DefaultImage pic={this.state.animationProfilePicture} />
+                    <Header1 title={this.state.animationName} />
+                    <Description description={this.state.animationDescription} />
                     <Button1 />
-                    <Gallery galleryData={this.state.eventPhotos} />
+                    <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>
             </View>
         );
     }
 }
 
-export default ScreenEvent
+export default ScreenAnimation
 
 const styles = StyleSheet.create({
     container: {

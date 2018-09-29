@@ -43,8 +43,7 @@ class ScreenTest extends React.Component {
     }
     componentWillMount() {
         this.readDataFromDatabase()
-       
-        console.log()
+    
     }
 
     render() {

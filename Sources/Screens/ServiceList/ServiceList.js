@@ -5,7 +5,7 @@ import ServiceListItem from './ServiceListItem';
 
 class ServiceList extends React.Component {
     static navigationOptions = {
-        title: 'ServiceList',
+        title: 'Service List',
     };
     constructor(props) {
         super(props);
