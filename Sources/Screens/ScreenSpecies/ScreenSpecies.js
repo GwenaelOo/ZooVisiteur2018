@@ -30,7 +30,7 @@ class ScreenSpecies extends React.Component {
     }
 
     handleServiceSelection(specieId){
-        this.props.navigation.navigate('ScreenTest', {   
+        this.props.navigation.navigate('ScreenSpecie', {   
             specieId: specieId 
         });
     }
