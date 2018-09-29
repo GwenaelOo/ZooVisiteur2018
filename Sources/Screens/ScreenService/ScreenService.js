@@ -5,6 +5,8 @@ import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
+import { colors } from '../../Theme/Theme';
+
 import firebase from 'firebase';
 
 import Gallery from '../../Components/Gallery/Gallery'
@@ -20,7 +22,7 @@ class ScreenTest extends React.Component {
             height: Dimensions.get('window').height,
             image: '',
             titletext: 'Nom initial',
-            serviceProfilePicture: '',
+            serviceProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             serviceName: '',
             serviceDescription: '',
             servicePhoto: []
@@ -66,6 +68,8 @@ export default ScreenTest
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffff',
+        width: "100%",
+        backgroundColor: colors.BACKGROUND_COLOR,
+        alignItems: 'center',
     },
 });

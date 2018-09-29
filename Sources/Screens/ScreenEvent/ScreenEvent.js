@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import ProfilePicture from '../../Components/Image/ProfilePicture'
 import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
+
+import { colors } from '../../Theme/Theme';
 
 import firebase from 'firebase';
 
@@ -20,7 +23,7 @@ class ScreenEvent extends React.Component {
             height: Dimensions.get('window').height,
             image: '',
             titletext: 'Nom initial',
-            eventProfilePicture: '',
+            eventProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             eventName: '',
             eventDescription: '',
             eventPhoto: []
@@ -48,9 +51,9 @@ class ScreenEvent extends React.Component {
 
     render() {
         return (
-          <View style={styles.container }> 
+          <View style={styles.container}> 
                 <ScrollView>
-                    <DefaultImage pic={this.state.eventProfilePicture} />
+                    <ProfilePicture img={this.state.eventProfilePicture} />
                     <Header1 title={this.state.eventName} />
                     <Description description={this.state.eventDescription} />
                     <Button1 />
@@ -66,6 +69,8 @@ export default ScreenEvent
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffff',
+        width: "100%",
+        backgroundColor: colors.BACKGROUND_COLOR,
+        alignItems: 'center',
     },
 });
