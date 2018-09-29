@@ -7,6 +7,8 @@ import ScreenButton from './ScreenButton';
 import ScreenGallery from './ScreenGallery';
 import firebase from 'firebase';
 
+import Gallery from '../../Components/Gallery/Gallery'
+
 class ScreenTest extends React.Component {
     static navigationOptions = {
         title: 'Test Screen',
@@ -21,54 +23,31 @@ class ScreenTest extends React.Component {
             serviceProfilePicture: '',
             serviceName: '',
             serviceDescription: '',
+            servicePhoto: []
         };
-        // GWEN - Ajout du bind des méthodes attachées aux states de la classe
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
-    /*     componentWillMount() {
-            var self = this;
-            var ref = firebase.database().ref('/servicesData/VEGANPOWER1538166135/serviceProfilePicture/fullPhoto')
-            ref.once('value').then(snap=>{
-                let temp = snap.val();
-                self.setState({
-                image: temp
-                });  
-            });
-        }    */
-
-    // Ajout de Gwen pour debug
     readDataFromDatabase() {
-        
-        //Créer une méthode dédiée permet de la binder au "context global de la class"
         var self = this;
-        // Gwen - Récupération de l'objet veganpower complet et pas juste la donnée du champ 
-        var ref = firebase.database().ref('AkongoFakeZoo/servicesData/VEGANPOWER1538166135/')
+        var ref = firebase.database().ref('AkongoFakeZoo/servicesData/' + this.props.navigation.getParam('serviceId', null))
         ref.once('value').then(snap => {
-            console.log(snap.val())
-            let temp = snap.val();
-
+            let remoteData = snap.val();
             self.setState({
-                serviceName: temp.serviceName,
-                serviceProfilePicture: temp.serviceProfilePicture,
-                serviceDescription: temp.serviceDescription,
+                serviceName: remoteData.serviceName,
+                serviceProfilePicture: remoteData.serviceProfilePicture,
+                serviceDescription: remoteData.serviceDescription,
+                servicePhotos: remoteData.servicePhotos,
             });
         });
     }
-
-
-    //
-
     componentWillMount() {
-        // GWEN : Création d'une méthode dédiée à la lecture de la base de donnée dans componentWillmount
         this.readDataFromDatabase()
-
+       
+        console.log()
     }
 
     render() {
-        console.log(this.state.titletext);
-        
-        console.log(this.state.serviceProfilePicture)
         return (
           <View style={styles.container }> 
                 <ScrollView>
@@ -76,7 +55,7 @@ class ScreenTest extends React.Component {
                     <ScreenHeader title={this.state.serviceName} />
                     <ScreenDescription description={this.state.serviceDescription} />
                     <ScreenButton />
-                    <ScreenGallery pic={this.state.serviceProfilePicture} />
+                    <Gallery galleryData={this.state.servicePhotos} />
                 </ScrollView>
             </View>
         );
