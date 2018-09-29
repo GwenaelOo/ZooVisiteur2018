@@ -9,9 +9,9 @@ import firebase from 'firebase';
 
 import Gallery from '../../Components/Gallery/Gallery'
 
-class ScreenEvent extends React.Component {
+class ScreenTest extends React.Component {
     static navigationOptions = {
-        title: 'Event Screen',
+        title: 'Service Screen',
     };
     constructor(props) {
         super(props);
@@ -20,24 +20,24 @@ class ScreenEvent extends React.Component {
             height: Dimensions.get('window').height,
             image: '',
             titletext: 'Nom initial',
-            eventProfilePicture: '',
-            eventName: '',
-            eventDescription: '',
-            eventPhoto: []
+            serviceProfilePicture: '',
+            serviceName: '',
+            serviceDescription: '',
+            servicePhoto: []
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/eventsData/' + this.props.navigation.getParam('eventId', null))
+        var ref = firebase.database().ref('AkongoFakeZoo/servicesData/' + this.props.navigation.getParam('serviceId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                eventName: remoteData.eventName,
-                eventProfilePicture: remoteData.eventProfilePicture,
-                eventDescription: remoteData.eventDescription,
-                eventPhotos: remoteData.eventPhotos,
+                serviceName: remoteData.serviceName,
+                serviceProfilePicture: remoteData.serviceProfilePicture,
+                serviceDescription: remoteData.serviceDescription,
+                servicePhotos: remoteData.servicePhotos,
             });
         });
     }
@@ -50,18 +50,18 @@ class ScreenEvent extends React.Component {
         return (
           <View style={styles.container }> 
                 <ScrollView>
-                    <DefaultImage pic={this.state.eventProfilePicture} />
-                    <Header1 title={this.state.eventName} />
-                    <Description description={this.state.eventDescription} />
+                    <DefaultImage pic={this.state.serviceProfilePicture} />
+                    <Header1 title={this.state.serviceName} />
+                    <Description description={this.state.serviceDescription} />
                     <Button1 />
-                    <Gallery galleryData={this.state.eventPhotos} />
+                    <Gallery galleryData={this.state.servicePhotos} />
                 </ScrollView>
             </View>
         );
     }
 }
 
-export default ScreenEvent
+export default ScreenTest
 
 const styles = StyleSheet.create({
     container: {

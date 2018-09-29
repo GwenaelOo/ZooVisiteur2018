@@ -4,11 +4,16 @@ import { createStackNavigator } from 'react-navigation';
 
 // IMPORTATION DES ECRANS
 
-import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenGwenPlayground from './Sources/Screens/ScreenGwenPlayground/ScreenGwenPlayground'
 import ScreenTedPlayground from './Sources/Screens/ScreenTedPlayground/ScreenTedPlayground'
 import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
-import ServiceList from './Sources/Screens/ServiceList/ServiceList'
+
+
+import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
+import ScreenService from './Sources/Screens/ScreenService/ScreenService'
+import ScreenAnimation from './Sources/Screens/ScreenAnimation/ScreenAnimation'
+
+import ScreenList from './Sources/Screens/ScreenList/ScreenList'
 
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
@@ -37,10 +42,30 @@ class HomeScreen extends React.Component {
         <Button
           title="Aller à la page Event"
           onPress={() => {
-            this.props.navigation.navigate('ScreenEvent', {
+            this.props.navigation.navigate('ScreenList', {
+              dataType: 'event'
             });
           }}
         />
+
+        <Button
+          title="Aller à la page Animation"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenList', {
+              dataType: 'animation'
+            });
+          }}
+        /> 
+        
+        <Button
+          title="Aller à la page Service"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenList', {
+              dataType: 'service'
+            });
+          }}
+        />
+
         <Button
           title="Aller à la page Ted Playground"
           onPress={() => {
@@ -52,6 +77,7 @@ class HomeScreen extends React.Component {
           title="Aller à la page GwenPlayground"
           onPress={() => {
             this.props.navigation.navigate('ScreenGwenPlayground', {
+              dataType: 'service'
             });
           }}
         />
@@ -59,15 +85,8 @@ class HomeScreen extends React.Component {
           title="Aller à la page Test"
           onPress={() => {
             this.props.navigation.navigate('ScreenTest', {
-            });    
-        }}
-        />
-        <Button
-          title="ServiceList"
-          onPress={() => {
-            this.props.navigation.navigate('ServiceList', {
-            });    
-        }}
+            });
+          }}
         />
       </View>
     );
@@ -91,25 +110,34 @@ const Navigator = createStackNavigator({
   ScreenTest: {
     screen: ScreenTest
   },
-  ServiceList: {
-    screen: ServiceList
+  ScreenList: {
+    screen: ScreenList
+  },
+  ScreenEvent: {
+    screen: ScreenEvent
+  },
+  ScreenService: {
+    screen: ScreenService
+  },
+  ScreenAnimation: {
+    screen: ScreenAnimation
   },
 
 
- 
-},{
-  initialRouteName: 'Home',
-  navigationOptions: {
-    headerStyle: {
-      backgroundColor: '#FFFFFF',
-    },
-    headerTintColor: '#5E7FB1',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-      color: '#5E7FB1',
-    },
-  }
-});
+
+}, {
+    initialRouteName: 'Home',
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#FFFFFF',
+      },
+      headerTintColor: '#5E7FB1',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+        color: '#5E7FB1',
+      },
+    }
+  });
 
 
 
