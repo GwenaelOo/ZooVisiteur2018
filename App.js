@@ -8,6 +8,7 @@ import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenGwenPlayground from './Sources/Screens/ScreenGwenPlayground/ScreenGwenPlayground'
 import ScreenTedPlayground from './Sources/Screens/ScreenTedPlayground/ScreenTedPlayground'
 import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
+import ServiceList from './Sources/Screens/ServiceList/ServiceList'
 
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
@@ -40,26 +41,33 @@ class HomeScreen extends React.Component {
             });
           }}
         />
-         <Button
+        <Button
           title="Aller à la page Ted Playground"
           onPress={() => {
             this.props.navigation.navigate('ScreenTedPlayground', {
             });
           }}
         />
-         <Button
+        <Button
           title="Aller à la page GwenPlayground"
           onPress={() => {
             this.props.navigation.navigate('ScreenGwenPlayground', {
             });
           }}
         />
-                 <Button
+        <Button
           title="Aller à la page Test"
           onPress={() => {
             this.props.navigation.navigate('ScreenTest', {
-            });
-          }}
+            });    
+        }}
+        />
+        <Button
+          title="ServiceList"
+          onPress={() => {
+            this.props.navigation.navigate('ServiceList', {
+            });    
+        }}
         />
       </View>
     );
@@ -82,6 +90,9 @@ const Navigator = createStackNavigator({
   },
   ScreenTest: {
     screen: ScreenTest
+  },
+  ServiceList: {
+    screen: ServiceList
   },
 
 
