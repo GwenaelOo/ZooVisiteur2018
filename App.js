@@ -90,11 +90,12 @@ const Navigator = createStackNavigator({
   initialRouteName: 'Home',
   navigationOptions: {
     headerStyle: {
-      backgroundColor: '#f4511e',
+      backgroundColor: '#FFFFFF',
     },
-    headerTintColor: '#fff',
+    headerTintColor: '#5E7FB1',
     headerTitleStyle: {
       fontWeight: 'bold',
+      color: '#5E7FB1',
     },
   }
 });
