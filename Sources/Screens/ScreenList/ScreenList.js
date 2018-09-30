@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
 import firebase from 'firebase';
 import ListItem from './ListItem';
-import {RkTabView} from 'react-native-ui-kitten';
+import { RkTabView } from 'react-native-ui-kitten';
 
 import { config } from '../../../config/config'
 
@@ -170,7 +170,7 @@ class ScreenList extends React.Component {
         return (
             <ScrollView>
                 <View>
-                    <RkTabView rkType='material'>
+                    <RkTabView rkType='material' onTabChanged={(index) => this.handleTabChange(index)}>
                         <RkTabView.Tab title={'icon'}>
                             <Text></Text>
                         </RkTabView.Tab>
