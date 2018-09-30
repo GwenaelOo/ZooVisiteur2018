@@ -27,7 +27,8 @@ class ScreenEvent extends React.Component {
             eventProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             eventName: '',
             eventDescription: '',
-            eventPhoto: []
+            eventPhotos: {}
+
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
@@ -47,12 +48,12 @@ class ScreenEvent extends React.Component {
     }
     componentWillMount() {
         this.readDataFromDatabase()
-    
+
     }
 
     render() {
         return (
-          <View style={styles.container}> 
+            <View style={styles.container}>
                 <ScrollView>
                     <ProfilePicture img={this.state.eventProfilePicture} />
                     <Header1 title={this.state.eventName} />

@@ -53,11 +53,9 @@ class HomeScreen extends React.Component {
     if (Platform.OS === 'android') {
      this.createNotificationChannel()
     }
-  
   }
 
   render() {
-    
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 

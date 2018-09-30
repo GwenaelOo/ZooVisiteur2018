@@ -58,8 +58,7 @@ class ScreenSpecies extends React.Component {
             
         
         }
-        console.log('this.state.speciesData')
-        console.log(this.state.speciesData)
+
         return (
           <View style={styles.container}> 
                 <ScrollView>

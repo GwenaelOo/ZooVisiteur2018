@@ -29,7 +29,7 @@ class ScreenAnimation extends React.Component {
             animationProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             animationName: '',
             animationDescription: '',
-            animationPhoto: []
+            animationPhotos: {}
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
@@ -67,8 +67,6 @@ class ScreenAnimation extends React.Component {
                     <View>
                         <Text>Fermeture</Text>
                     </View>
-               
-
                     <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>
             </View>

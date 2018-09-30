@@ -18,16 +18,6 @@ class SpecieCard extends React.Component {
     }
 
     render() {
-        console.log('this.state.specieProfilePicture.largeThumb')
-        console.log(this.state.specieData.specieProfilePicture.largeThumb)
-        console.log('this.state.specieData.specieName')
-        // Genre là il faut ajouter FR
-        console.log(this.state.specieData.specieName.fr)
-        // Il y pa de logique il faut juste regarder dans la base ce que tu récupère
-        console.log('this.state.specieData.specieLatinName')
-        console.log(this.state.specieData.specieLatinName)
-
-
         return (
             <View style={styles.card}>
                 <RkCard>

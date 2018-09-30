@@ -26,7 +26,8 @@ class ScreenTest extends React.Component {
             serviceProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             serviceName: '',
             serviceDescription: '',
-            servicePhoto: []
+            servicePhotos: {},
+            galleryDisplay: false
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
@@ -46,12 +47,12 @@ class ScreenTest extends React.Component {
     }
     componentWillMount() {
         this.readDataFromDatabase()
-    
+
     }
 
     render() {
         return (
-          <View style={styles.container }> 
+            <View style={styles.container}>
                 <ScrollView>
                     <DefaultImage pic={this.state.serviceProfilePicture} />
                     <Header1 title={this.state.serviceName} />

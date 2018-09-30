@@ -9,8 +9,6 @@ class GalleryItem extends React.Component {
     }
 
     render() {
-        console.log('props article data')
-        console.log(this.props.articleData)
         return (
             <RkCard>
                 <TouchableOpacity >

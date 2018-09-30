@@ -10,9 +10,6 @@ class BlogWidget extends React.Component {
 
     render() {
         let articlesList = this.props.articlesData;
-
-        console.log(articlesList)
-
         let list = []
 
         for (let aticle in articlesList) {
