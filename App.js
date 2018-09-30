@@ -6,8 +6,6 @@ import { createStackNavigator } from 'react-navigation';
 
 import ScreenGwenPlayground from './Sources/Screens/ScreenGwenPlayground/ScreenGwenPlayground'
 import ScreenTedPlayground from './Sources/Screens/ScreenTedPlayground/ScreenTedPlayground'
-import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
-
 
 import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenService from './Sources/Screens/ScreenService/ScreenService'
@@ -33,7 +31,7 @@ registerForPushNotificationsAsync()
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to the APP',
+    title: 'Welcome to the awesome APP',
   };
   constructor(props) {
     super(props);
@@ -128,9 +126,6 @@ const Navigator = createStackNavigator({
   },
   ScreenGwenPlayground: {
     screen: ScreenGwenPlayground
-  },
-  ScreenTest: {
-    screen: ScreenTest
   },
   ScreenSpecie: {
     screen: ScreenSpecie
