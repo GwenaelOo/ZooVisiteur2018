@@ -9,6 +9,11 @@ class GalleryItem extends React.Component {
     }
 
     render() {
+<<<<<<< HEAD
+=======
+        console.log('props article data')
+        console.log(this.props.articleData)
+>>>>>>> Bug fixing
         return (
             <RkCard>
                 <TouchableOpacity >

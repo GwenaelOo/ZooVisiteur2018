@@ -15,9 +15,7 @@ import Title from '../../Components/Common/Text/Title';
 import LightTitle from '../../Components/Common/Text/LightTitle';
 import BasicButton from '../../Components/Common/Button/BasicButton';
 import AnimalListRound from './AnimalListRound/AnimalListRound';
-
-
-
+import BlogWidget from '../../Components/Blog/BlogWidget';
 
 class ScreenSpecie extends React.Component {
     static navigationOptions = {
@@ -38,11 +36,23 @@ class ScreenSpecie extends React.Component {
             specieName: '',
             specieLatinName: '',
 
-            specieAnimals: []
+            specieAnimals: [],
 
+            articles: []
        
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
+        this.getAticles = this.getAticles.bind(this)
+    }
+    getAticles() {
+        var self = this;
+        var ref = firebase.database().ref('AkongoFakeZoo/articlesData/')
+        ref.once('value').then(snap => {
+            let remoteData = snap.val();
+            self.setState({
+              articles: remoteData
+            });
+        });
     }
 
     readDataFromDatabase() {
@@ -62,10 +72,12 @@ class ScreenSpecie extends React.Component {
     }
     componentWillMount() {
         this.readDataFromDatabase()
+        this.getAticles()
 
     }
 
     render() {
+
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -82,7 +94,9 @@ class ScreenSpecie extends React.Component {
 
                     <Gallery galleryData={this.state.speciePhotos}/>
 
-                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals}/> 
+                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} /> 
+
+                    <BlogWidget articlesData={this.state.articles}/>
 
                 </ScrollView>
             </View>
