@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {RkCard} from 'react-native-ui-kitten';
 
 class ListItem extends Component {
     static navigationOptions = {
@@ -23,18 +24,20 @@ class ListItem extends Component {
         console.log(this.state.serviceData)
         return (
             <View style={styles.container}>
-                <View>
-                    <Text >
-                        {this.props.itemData.itemName}
-                    </Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={this.HandlePress}>
-                        <Image
-                            style={{ width: this.state.width, height: this.state.height }}
-                            source={{ uri: this.props.itemData.itemPhoto }} />
-                    </TouchableOpacity>
-                </View>
+            <View style={styles.card}>
+            <RkCard>
+            <View rkCardHeader>
+                <Text style={styles.header}>{this.props.itemData.itemName}</Text>
+            </View>
+            <TouchableOpacity onPress={this.HandlePress}> 
+            <Image rkCardImg source={{uri:this.props.itemData.itemPhoto}}/>
+            </TouchableOpacity> 
+{/*             <View rkCardContent>
+                <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
+            </View> */}
+            </RkCard>
+            </View>
+
             </View>
         )
     }
@@ -43,19 +46,10 @@ class ListItem extends Component {
 export default ListItem;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1
-        /*         fontWeight: 'bold',
-                fontSize: 35,
-                marginLeft: 20,
-                marginTop: 0,
-                textAlign: 'left',
-                color: '#5E7FB1', */
+    header: {
+        fontSize: 30,
     },
-    type: {
-        /*  flex: 1, */
-        /*         margin: 20,
-                textAlign: 'left',
-                color: '#5E7FB1', */
-    },
+    card : {
+        padding: 15,
+    }
 });

@@ -5,6 +5,10 @@ import LargeSeparator from '../../../Components/Common/Separator/LargeSeparator'
 
 
 class AnimalListRound extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         if (Object.keys(this.props.animalsOfThisSpecie).length > 0) {
             let animalsOfThisSpecie = this.props.animalsOfThisSpecie
@@ -28,7 +32,7 @@ class AnimalListRound extends React.Component {
                     <LargeSeparator text='Nos animaux' />
                     <View style={styles.AnimalsList}>
                         {
-                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} />; })
+                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.HandleSelection} />; })
                         }
                     </View>
                 </View>
@@ -38,6 +42,7 @@ class AnimalListRound extends React.Component {
         else {
             return (null)
         }
+
     }
 }
 

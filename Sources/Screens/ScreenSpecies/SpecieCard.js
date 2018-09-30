@@ -1,8 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import ProfilePicture from '../../Components/Image/ProfilePicture'
 import { RkCard } from 'react-native-ui-kitten';
-
 
 class SpecieCard extends React.Component {
     constructor(props) {

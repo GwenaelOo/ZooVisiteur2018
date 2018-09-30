@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
 import firebase from 'firebase';
 import ListItem from './ListItem';
+import {RkTabView} from 'react-native-ui-kitten';
 
 import { config } from '../../../config/config'
 
@@ -146,9 +147,21 @@ class ScreenList extends React.Component {
     }
 
     render() {
+
         return (
             <ScrollView>
-                <View style={styles.container}>
+                <View>
+                    <RkTabView rkType='material'>
+                        <RkTabView.Tab title={'icon'}>
+                            <Text></Text>
+                        </RkTabView.Tab>
+                        <RkTabView.Tab title={'Restauration'}>
+                            <Text></Text>
+                        </RkTabView.Tab>
+                        <RkTabView.Tab title={'Magasins'}>
+                            <Text></Text>
+                        </RkTabView.Tab>
+                    </RkTabView>
                     {
                         this.state.listReadyToMap.map(function (item) {
                             return <ListItem
@@ -173,3 +186,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"></link>

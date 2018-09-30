@@ -42,6 +42,7 @@ class ScreenSpecie extends React.Component {
 
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
+        this.HandleSelection = this.HandleSelection.bind(this)
         this.getAticles = this.getAticles.bind(this)
     }
     getAticles() {
@@ -71,6 +72,13 @@ class ScreenSpecie extends React.Component {
         });
     }
 
+    HandleSelection(selectedAnimalId) {
+        this.props.navigation.navigate('ScreenAnimal', {
+            animalId: selectedAnimalId,
+            specieId: this.state.specieId,
+        })
+    }
+
     componentWillMount() {
         this.readDataFromDatabase()
         this.getAticles()
@@ -93,8 +101,8 @@ class ScreenSpecie extends React.Component {
 
                     <Gallery galleryData={this.state.speciePhotos} />
 
-                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} />
-
+                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} HandleSelection={this.HandleSelection}/> 
+                    
                     <BlogWidget articlesData={this.state.articles} />
 
                 </ScrollView>
