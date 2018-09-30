@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import ListItem from './ListItem';
 import {RkTabView} from 'react-native-ui-kitten';
 
+import { config } from '../../../config/config'
+
 class ScreenList extends React.Component {
     static navigationOptions = {
         title: 'ServiceList',

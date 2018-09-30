@@ -1,4 +1,6 @@
 import { Permissions, Notifications } from 'expo';
+import { config } from '../../../config/config'
+const uuid = require('uuid/v1');
 import * as firebase from 'firebase';
 
 
@@ -14,6 +16,8 @@ export default (async function registerForPushNotificationsAsync() {
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
 
+  console.log(token)
 
- firebase.database().ref('/debug/token').update({ token: token });
+
+ firebase.database().ref(config.zooId + '/NotificationsClients/' + uuid() ).update({ token: token });
 });

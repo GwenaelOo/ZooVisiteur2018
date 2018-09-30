@@ -41,9 +41,20 @@ class HomeScreen extends React.Component {
     };
   }
 
-
+  createNotificationChannel(){
+    console.log('les notifications c bon')
+    Expo.Notifications.createChannelAndroidAsync('chat-messages', {
+      name: 'BackendNotification',
+      priority: 'max',
+      sound: true,
+      vibrate: [0, 250, 250, 250],
+    });
+  }
 
   componentWillMount(){
+    if (Platform.OS === 'android') {
+     this.createNotificationChannel()
+    }
   
   }
 
