@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
 import firebase from 'firebase';
 import ListItem from './ListItem';
-import {RkTabView} from 'react-native-ui-kitten';
+import { RkTabView } from 'react-native-ui-kitten';
 
 import { config } from '../../../config/config'
 
@@ -21,6 +21,7 @@ class ScreenList extends React.Component {
         };
         this.handleSelection = this.handleSelection.bind(this)
         this.handleMapping = this.handleMapping.bind(this)
+        this.handleTabChange = this.handleTabChange.bind(this)
     }
 
     getReferenceFromDataType(dataType) {
@@ -39,6 +40,23 @@ class ScreenList extends React.Component {
         }
     }
 
+    handleTabChange(index) {
+        switch (index) {
+            case 0:
+            this.readDataFromDatabase('event')
+                break;
+            case 1:
+            this.readDataFromDatabase('animation')
+                break;
+            case 2:
+            this.readDataFromDatabase('service')
+                break;
+
+            default:
+                break;
+        }
+    }
+
     readDataFromDatabase(dataType) {
 
         let reference = this.getReferenceFromDataType(dataType)
@@ -47,7 +65,8 @@ class ScreenList extends React.Component {
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                remoteList: remoteData
+                remoteList: remoteData,
+                dataType: dataType
             });
         }).then(result => {
             this.handleMapping()
@@ -151,7 +170,7 @@ class ScreenList extends React.Component {
         return (
             <ScrollView>
                 <View>
-                    <RkTabView rkType='material'>
+                    <RkTabView rkType='material' onTabChanged={(index) => this.handleTabChange(index)}>
                         <RkTabView.Tab title={'icon'}>
                             <Text></Text>
                         </RkTabView.Tab>
