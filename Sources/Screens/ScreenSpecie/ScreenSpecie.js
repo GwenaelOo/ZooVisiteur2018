@@ -92,7 +92,7 @@ class ScreenSpecie extends React.Component {
 
                     <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} HandleSelection={this.HandleSelection}/> 
                     
-                    <BlogWidget articlesData={this.state.articles} />
+                    {/* <BlogWidget articlesData={this.state.articles} /> */}
 
                 </ScrollView>
             </View>

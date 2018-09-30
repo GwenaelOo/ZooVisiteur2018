@@ -27,13 +27,9 @@ class ScreenAnimal extends React.Component {
 
             specieId: /*'CHIEN1537970805',*/this.props.navigation.getParam('specieId', null),
             animalId: /*'HEVEA1537970909',*/ this.props.navigation.getParam('animalId', null),
-            
-            animalProfilePicture: "http://res.cloudinary.com/akongo/image/upload/v1537970871/temp/ueufbs9ddnvpsivyyhs3.jpg",
-
+            animalProfilePicture: '',
             animalBiography: '',
-            /* animalProfilePicture: [], */
-
-            animalName: 'Hevea',
+            animalName: '',
             animalSex: '',
        
         };
