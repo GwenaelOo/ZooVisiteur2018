@@ -171,7 +171,7 @@ class ScreenList extends React.Component {
             <ScrollView>
                 <View>
                     <RkTabView rkType='material'>
-                        <RkTabView.Tab title={icon}>
+                        <RkTabView.Tab title={'icon'}>
                             <Text></Text>
                         </RkTabView.Tab>
                         <RkTabView.Tab title={'Restauration'}>
