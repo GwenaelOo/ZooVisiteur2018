@@ -60,7 +60,7 @@ class ServiceList extends React.Component {
 
         return (
             <ScrollView>
-                <View style={styles.container}>
+                <View>
                 {
                     list.map(function (service) { return <ServiceListItem 
                         serviceData={service}
