@@ -24,19 +24,6 @@ class ListItem extends Component {
         console.log(this.state.serviceData)
         return (
             <View style={styles.container}>
-{/*                 <View>
-                    <Text >
-                        {this.props.itemData.itemName}
-                    </Text>
-                </View>
-                <View>
-                    <TouchableOpacity onPress={this.HandlePress}>
-                        <Image
-                            style={{ width: this.state.width, height: this.state.height }}
-                            source={{ uri: this.props.itemData.itemPhoto }} />
-                    </TouchableOpacity>
-                </View> */}
-
             <View style={styles.card}>
             <RkCard>
             <View rkCardHeader>
