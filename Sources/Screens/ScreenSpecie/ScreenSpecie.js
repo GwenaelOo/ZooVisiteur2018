@@ -41,17 +41,7 @@ class ScreenSpecie extends React.Component {
 
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
-        this.getAticles = this.getAticles.bind(this)
-    }
-    getAticles() {
-        var self = this;
-        var ref = firebase.database().ref(config.zooId + '/articlesData/')
-        ref.once('value').then(snap => {
-            let remoteData = snap.val();
-            self.setState({
-                articles: remoteData
-            });
-        });
+        this.HandleSelection = this.HandleSelection.bind(this)
     }
 
     readDataFromDatabase() {
@@ -68,6 +58,13 @@ class ScreenSpecie extends React.Component {
                 specieAnimals: remoteData.specieAnimals,
             });
         });
+    }
+
+    HandleSelection(selectedAnimalId) {
+        this.props.navigation.navigate('ScreenAnimal', {
+            animalId: selectedAnimalId,
+            specieId: this.state.specieId,
+        })
     }
 
     componentWillMount() {
@@ -94,7 +91,7 @@ class ScreenSpecie extends React.Component {
 
                     <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} />
 
-                    <BlogWidget articlesData={this.state.articles} />
+                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} HandleSelection={this.HandleSelection}/> 
 
                 </ScrollView>
             </View>

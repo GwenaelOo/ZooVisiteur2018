@@ -118,6 +118,13 @@ class HomeScreen extends React.Component {
             });
           }}
         />
+                <Button
+          title="Animal Screen"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenAnimal', {
+            });
+          }}
+        />
 
       </View>
     );

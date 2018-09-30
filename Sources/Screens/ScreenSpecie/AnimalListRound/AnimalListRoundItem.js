@@ -6,17 +6,25 @@ import LightTitle from '../../../Components/Common/Text/LightTitle';
 
 
 class AnimalListRoundItem extends React.Component {
-    render() {
+    constructor(props) {
+        super(props);
 
+        this.HandlePress = this.HandlePress.bind(this)
+
+    }
+    
+    
+    HandlePress() {
+        this.props.HandleSelection(this.props.animal.animalId)
+}
+
+
+    render() {
+console.log(this.props.animal.animalId)
         return (
         <View>
             <TouchableOpacity 
-            // onPress={() => {
-            //     this.props.navigation.navigate('ScreenAnimal', {
-            //         animalId: this.props.animal.animalId,
-            //         specieId: this.props.animal.specieId,
-            //     })
-            // }}
+                onPress={this.HandlePress}
             >
             <View style={styles.AnimalItem}>
                     
