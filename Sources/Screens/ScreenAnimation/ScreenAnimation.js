@@ -9,6 +9,7 @@ import firebase from 'firebase';
 import moment from 'moment';
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import ProfilePicture from '../../Components/Image/ProfilePicture'
 import Gallery from '../../Components/Gallery/Gallery'
@@ -28,21 +29,21 @@ class ScreenAnimation extends React.Component {
             animationProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             animationName: '',
             animationDescription: '',
-            animationPhoto: []
+            animationPhotos: {}
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/animationsData/' + this.props.navigation.getParam('animationId', null))
+        var ref = firebase.database().ref(config.zooId + '/animationsData/' + this.props.navigation.getParam('animationId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
                 animationName: remoteData.animationName,
                 animationProfilePicture: remoteData.animationProfilePicture.largeThumb,
                 animationDescription: remoteData.animationDescription,
-                animationPhotos: remoteData.animationPhotos,
+                animationPhotos: remoteData.animationPhotos || {},
             });
         });
     }
@@ -66,8 +67,6 @@ class ScreenAnimation extends React.Component {
                     <View>
                         <Text>Fermeture</Text>
                     </View>
-               
-
                     <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>
             </View>

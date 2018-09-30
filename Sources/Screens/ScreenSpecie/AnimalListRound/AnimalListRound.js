@@ -8,35 +8,41 @@ class AnimalListRound extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render() {
+        if (Object.keys(this.props.animalsOfThisSpecie).length > 0) {
+            let animalsOfThisSpecie = this.props.animalsOfThisSpecie
 
-        let animalsOfThisSpecie = this.props.animalsOfThisSpecie
+            const animalsOfThisSpecieArray = [];
 
-        const animalsOfThisSpecieArray = [];
+            for (let animal in animalsOfThisSpecie) {
+                let animalData = {
+                    animalId: animalsOfThisSpecie[animal].animalId,
+                    animalProfilePicture: animalsOfThisSpecie[animal].animalProfilePicture.largeThumb,
+                    animalName: animalsOfThisSpecie[animal].animalName,
+                    animalSex: animalsOfThisSpecie[animal].animalSex,
+                    animalAge: animalsOfThisSpecie[animal].animalAge,
+                    specieId: animalsOfThisSpecie[animal].specieId,
+                };
+                animalsOfThisSpecieArray.push(animalData);
+            }
 
-        for (let animal in animalsOfThisSpecie) {
-            let animalData = {
-                animalId: animalsOfThisSpecie[animal].animalId,
-                animalProfilePicture: animalsOfThisSpecie[animal].animalProfilePicture.largeThumb,
-                animalName: animalsOfThisSpecie[animal].animalName,
-                animalSex: animalsOfThisSpecie[animal].animalSex,
-                animalAge: animalsOfThisSpecie[animal].animalAge,
-                specieId: animalsOfThisSpecie[animal].specieId,
-            };
-            animalsOfThisSpecieArray.push(animalData);
+            return (
+                <View>
+                    <LargeSeparator text='Nos animaux' />
+                    <View style={styles.AnimalsList}>
+                        {
+                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.HandleSelection} />; })
+                        }
+                    </View>
+                </View>
+
+            );
+        }
+        else {
+            return (null)
         }
 
-        return (
-            <View>
-            <LargeSeparator text='Nos animaux' />
-            <View style={styles.AnimalsList}>
-                {
-                    animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.props.HandleSelection}/>; }, this)
-                }
-            </View>
-            </View>
-
-        );
     }
 }
 
