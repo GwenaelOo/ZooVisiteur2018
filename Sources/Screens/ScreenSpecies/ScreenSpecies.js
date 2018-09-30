@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
 import firebase from 'firebase';
 import SpecieCard from './SpecieCard'
+import { config } from '../../../config/config'
 
 class ScreenSpecies extends React.Component {
     static navigationOptions = {
@@ -18,7 +19,7 @@ class ScreenSpecies extends React.Component {
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/speciesData/')
+        var ref = firebase.database().ref(config.zooId + '/speciesData/')
         ref.once('value').then(snap => {
 
             let temp = snap.val();
@@ -57,8 +58,7 @@ class ScreenSpecies extends React.Component {
             
         
         }
-        console.log('this.state.speciesData')
-        console.log(this.state.speciesData)
+
         return (
           <View style={styles.container}> 
                 <ScrollView>

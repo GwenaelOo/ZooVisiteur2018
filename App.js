@@ -1,13 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 // IMPORTATION DES ECRANS
 
 import ScreenGwenPlayground from './Sources/Screens/ScreenGwenPlayground/ScreenGwenPlayground'
 import ScreenTedPlayground from './Sources/Screens/ScreenTedPlayground/ScreenTedPlayground'
-import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
-
 
 import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenService from './Sources/Screens/ScreenService/ScreenService'
@@ -35,7 +33,7 @@ registerForPushNotificationsAsync()
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to the APP',
+    title: 'Welcome to the awesome APP',
   };
   constructor(props) {
     super(props);
@@ -43,14 +41,23 @@ class HomeScreen extends React.Component {
     };
   }
 
-
+  createNotificationChannel(){
+    console.log('les notifications c bon')
+    Expo.Notifications.createChannelAndroidAsync('chat-messages', {
+      name: 'BackendNotification',
+      priority: 'max',
+      sound: true,
+      vibrate: [0, 250, 250, 250],
+    });
+  }
 
   componentWillMount(){
-  
+    if (Platform.OS === 'android') {
+     this.createNotificationChannel()
+    }
   }
 
   render() {
-    
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
@@ -137,9 +144,6 @@ const Navigator = createStackNavigator({
   },
   ScreenGwenPlayground: {
     screen: ScreenGwenPlayground
-  },
-  ScreenTest: {
-    screen: ScreenTest
   },
   ScreenSpecie: {
     screen: ScreenSpecie

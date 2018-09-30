@@ -4,6 +4,8 @@ import firebase from 'firebase';
 import ListItem from './ListItem';
 import {RkTabView} from 'react-native-ui-kitten';
 
+import { config } from '../../../config/config'
+
 class ScreenList extends React.Component {
     static navigationOptions = {
         title: 'ServiceList',
@@ -24,13 +26,13 @@ class ScreenList extends React.Component {
     getReferenceFromDataType(dataType) {
         switch (dataType) {
             case 'service':
-                return 'AkongoFakeZoo/servicesData/'
+                return config.zooId + '/servicesData/'
                 break;
             case 'event':
-                return 'AkongoFakeZoo/eventsData/'
+                return config.zooId + '/eventsData/'
                 break;
             case 'animation':
-                return 'AkongoFakeZoo/animationsData/'
+                return config.zooId + '/animationsData/'
                 break;
             default:
                 break;

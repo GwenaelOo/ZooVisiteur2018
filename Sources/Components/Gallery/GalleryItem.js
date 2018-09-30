@@ -7,7 +7,6 @@ class GalleryItem extends React.Component {
     }
 
     render() {
-            console.log(this.props.itemData)
         return (
             <TouchableOpacity activeOpacity={0.5} delayPressIn={75} onPress={this.HandlePress}>
                 <View style={styles.galleryItem}>
