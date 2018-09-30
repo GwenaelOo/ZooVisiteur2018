@@ -41,22 +41,14 @@ class HomeScreen extends React.Component {
     };
   }
 
-  createNotificationChannel(){
-    Expo.Notifications.createChannelAndroidAsync('Notification default', {
-      name: 'BackendNotification',
-      priority: 'max',
-      sound: true,
-      vibrate: [0, 250, 250, 250],
-    });
-  }
+
 
   componentWillMount(){
-    if (Platform.OS === 'android') {
-     this.createNotificationChannel()
-    }
+  
   }
 
   render() {
+    
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
@@ -114,13 +106,6 @@ class HomeScreen extends React.Component {
           title="Aller à la page Test"
           onPress={() => {
             this.props.navigation.navigate('ScreenTest', {
-            });
-          }}
-        />
-                <Button
-          title="Animal Screen"
-          onPress={() => {
-            this.props.navigation.navigate('ScreenAnimal', {
             });
           }}
         />

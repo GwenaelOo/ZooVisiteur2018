@@ -77,7 +77,7 @@ class ScreenSpecie extends React.Component {
                     </View>
 
                     <Description description={this.state.specieDescription.fr} separatorText='A propos'/>
-
+                    
                     <BasicButton text="En savoir plus" width="150" />
 
                     <Gallery galleryData={this.state.speciePhotos}/>
