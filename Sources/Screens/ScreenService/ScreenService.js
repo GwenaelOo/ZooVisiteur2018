@@ -41,7 +41,7 @@ class ScreenTest extends React.Component {
                 serviceName: remoteData.serviceName,
                 serviceProfilePicture: remoteData.serviceProfilePicture,
                 serviceDescription: remoteData.serviceDescription,
-                servicePhotos: remoteData.servicePhotos,
+                servicePhotos: remoteData.servicePhotos || {},
             });
         });
     }

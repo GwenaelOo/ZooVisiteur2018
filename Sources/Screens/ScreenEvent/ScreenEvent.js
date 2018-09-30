@@ -42,7 +42,7 @@ class ScreenEvent extends React.Component {
                 eventName: remoteData.eventName,
                 eventProfilePicture: remoteData.eventProfilePicture,
                 eventDescription: remoteData.eventDescription,
-                eventPhotos: remoteData.eventPhotos,
+                eventPhotos: remoteData.eventPhotos || {},
             });
         });
     }

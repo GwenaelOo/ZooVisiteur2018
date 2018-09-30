@@ -43,7 +43,7 @@ class ScreenAnimation extends React.Component {
                 animationName: remoteData.animationName,
                 animationProfilePicture: remoteData.animationProfilePicture.largeThumb,
                 animationDescription: remoteData.animationDescription,
-                animationPhotos: remoteData.animationPhotos,
+                animationPhotos: remoteData.animationPhotos || {},
             });
         });
     }
