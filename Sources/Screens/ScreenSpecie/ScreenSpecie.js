@@ -6,6 +6,7 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import firebase from 'firebase';
 
@@ -46,7 +47,7 @@ class ScreenSpecie extends React.Component {
     }
     getAticles() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/articlesData/')
+        var ref = firebase.database().ref(config.zooId + '/articlesData/')
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
@@ -57,7 +58,7 @@ class ScreenSpecie extends React.Component {
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/speciesData/' + this.state.specieId)
+        var ref = firebase.database().ref(config.zooId + '/speciesData/' + this.state.specieId)
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({

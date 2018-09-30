@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 // IMPORTATION DES ECRANS
@@ -39,9 +39,20 @@ class HomeScreen extends React.Component {
     };
   }
 
-
+  createNotificationChannel(){
+    console.log('les notifications c bon')
+    Expo.Notifications.createChannelAndroidAsync('chat-messages', {
+      name: 'BackendNotification',
+      priority: 'max',
+      sound: true,
+      vibrate: [0, 250, 250, 250],
+    });
+  }
 
   componentWillMount(){
+    if (Platform.OS === 'android') {
+     this.createNotificationChannel()
+    }
   
   }
 

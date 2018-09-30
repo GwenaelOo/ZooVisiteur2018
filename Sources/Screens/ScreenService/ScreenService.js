@@ -6,6 +6,7 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import firebase from 'firebase';
 
@@ -32,7 +33,7 @@ class ScreenTest extends React.Component {
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/servicesData/' + this.props.navigation.getParam('serviceId', null))
+        var ref = firebase.database().ref(config.zooId + '/servicesData/' + this.props.navigation.getParam('serviceId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({

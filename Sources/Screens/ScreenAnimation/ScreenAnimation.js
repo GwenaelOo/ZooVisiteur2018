@@ -9,6 +9,7 @@ import firebase from 'firebase';
 import moment from 'moment';
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import ProfilePicture from '../../Components/Image/ProfilePicture'
 import Gallery from '../../Components/Gallery/Gallery'
@@ -35,7 +36,7 @@ class ScreenAnimation extends React.Component {
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/animationsData/' + this.props.navigation.getParam('animationId', null))
+        var ref = firebase.database().ref(config.zooId + '/animationsData/' + this.props.navigation.getParam('animationId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({

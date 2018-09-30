@@ -7,6 +7,7 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import firebase from 'firebase';
 
@@ -33,7 +34,7 @@ class ScreenEvent extends React.Component {
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/eventsData/' + this.props.navigation.getParam('eventId', null))
+        var ref = firebase.database().ref(config.zooId + '/eventsData/' + this.props.navigation.getParam('eventId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
