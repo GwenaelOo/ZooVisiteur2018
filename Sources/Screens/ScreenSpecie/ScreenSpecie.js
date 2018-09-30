@@ -55,8 +55,8 @@ class ScreenSpecie extends React.Component {
                 specieProfilePicture: remoteData.specieProfilePicture,
                 specieLatinName: remoteData.specieLatinName,
                 specieDescription: remoteData.specieDescription,
-                speciePhotos: remoteData.speciePhotos|| {},
-                specieAnimals: remoteData.specieAnimals || {}
+                speciePhotos: remoteData.speciePhotos || {},
+                specieAnimals: remoteData.specieAnimals || {},
             });
         });
     }
