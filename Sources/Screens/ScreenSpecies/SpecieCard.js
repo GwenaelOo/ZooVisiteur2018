@@ -29,6 +29,7 @@ class SpecieCard extends React.Component {
 
 
         return (
+
             <View style={styles.card}>
                 <RkCard>
                     <TouchableOpacity onPress={this.HandlePress}>
