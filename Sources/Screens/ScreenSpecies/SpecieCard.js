@@ -18,17 +18,17 @@ class SpecieCard extends React.Component {
     render() {
         return (
             <View style={styles.card}>
-            <RkCard>
-            <View rkCardHeader>
-                <Text style={styles.header}>{this.state.specieData.specieName.fr}</Text>
-            </View>
-            <TouchableOpacity onPress={this.HandlePress}> 
-            <Image rkCardImg source={{uri:this.state.specieData.specieProfilePicture.largeThumb}}/>
-            </TouchableOpacity> 
-            <View rkCardContent>
-                <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
-            </View>
-            </RkCard>
+                <RkCard>
+                    <View rkCardHeader>
+                        <Text style={styles.header}>{this.state.specieData.specieName.fr}</Text>
+                    </View>
+                    <TouchableOpacity onPress={this.HandlePress}>
+                        <Image rkCardImg source={{ uri: this.state.specieData.specieProfilePicture.largeThumb }} />
+                    </TouchableOpacity>
+                    <View rkCardContent>
+                        <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
+                    </View>
+                </RkCard>
             </View>
         );
     }
