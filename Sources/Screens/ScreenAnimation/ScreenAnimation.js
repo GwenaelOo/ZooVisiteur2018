@@ -6,11 +6,13 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import firebase from 'firebase';
+import moment from 'moment';
 
 import { colors } from '../../Theme/Theme';
 
 import ProfilePicture from '../../Components/Image/ProfilePicture'
 import Gallery from '../../Components/Gallery/Gallery'
+import LargeSeparator from '../../Components/Common/Separator/LargeSeparator';
 
 class ScreenAnimation extends React.Component {
     static navigationOptions = {
@@ -56,6 +58,16 @@ class ScreenAnimation extends React.Component {
                     <Header1 title={this.state.animationName} />
                     <Description description={this.state.animationDescription} separatorText='Description' />
                     <Button1 />
+
+                    <LargeSeparator text='Horaire'/>
+                    <View>
+                        <Text>Ouverture</Text>
+                    </View>
+                    <View>
+                        <Text>Fermeture</Text>
+                    </View>
+               
+
                     <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>
             </View>

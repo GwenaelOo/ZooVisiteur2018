@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import ProfilePicture from '../../Components/Image/ProfilePicture'
-import {RkCard} from 'react-native-ui-kitten';
+import { RkCard } from 'react-native-ui-kitten';
 
 
 class SpecieCard extends React.Component {
@@ -26,20 +26,22 @@ class SpecieCard extends React.Component {
         // Il y pa de logique il faut juste regarder dans la base ce que tu récupère
         console.log('this.state.specieData.specieLatinName')
         console.log(this.state.specieData.specieLatinName)
-        
-        
+
+
         return (
-<View style={styles.card}>
-<RkCard>
-  <View rkCardHeader>
-    <Text style={styles.header}>{this.state.specieData.specieName.fr}</Text>
-  </View> 
-  <Image rkCardImg source={{uri:this.state.specieData.specieProfilePicture.largeThumb}}/>
-  <View rkCardContent>
-    <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
-  </View>
-</RkCard>
-</View>
+            <View style={styles.card}>
+                <RkCard>
+                    <TouchableOpacity onPress={this.HandlePress}>
+                        <View rkCardHeader>
+                            <Text style={styles.header}>{this.state.specieData.specieName.fr}</Text>
+                        </View>
+                        <Image rkCardImg source={{ uri: this.state.specieData.specieProfilePicture.largeThumb }} />
+                        <View rkCardContent>
+                            <Text>{this.state.specieData.specieLatinName} has a {this.state.specieData.specieLifeExpectancy} average life expectancy.</Text>
+                        </View>
+                    </TouchableOpacity>
+                </RkCard>
+            </View>
         );
     }
 }
@@ -50,7 +52,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 30,
     },
-    card : {
+    card: {
         padding: 15,
     }
 });
