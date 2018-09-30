@@ -22,12 +22,14 @@ import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
 import { firebaseConfig } from './config/config'
+import registerForPushNotificationsAsync from './Sources/Components/api/registerForPushNotificationsAsync'
 
 // IMPORTATION DES LIBRAIRIES
 
 import * as firebase from 'firebase';
 
 firebase.initializeApp(firebaseConfig);
+registerForPushNotificationsAsync()
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -39,15 +41,21 @@ class HomeScreen extends React.Component {
     };
   }
 
+
+
+  componentWillMount(){
+  
+  }
+
   render() {
+    
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
         <Button
-          title="Aller à la page specie"
+          title="ScreenSpecies"
           onPress={() => {
-            this.props.navigation.navigate('ScreenSpecie', {
-              specieId: "CHIEN1537970805"
+            this.props.navigation.navigate('ScreenSpecies', {
             });
           }}
         />
@@ -101,13 +109,7 @@ class HomeScreen extends React.Component {
             });
           }}
         />
-                <Button
-          title="ScreenSpecies"
-          onPress={() => {
-            this.props.navigation.navigate('ScreenSpecies', {
-            });
-          }}
-        />
+
       </View>
     );
   }

@@ -76,14 +76,13 @@ class ScreenSpecie extends React.Component {
                         <LightTitle text={this.state.specieLatinName} />
                     </View>
 
-                    <Description description={this.state.specieDescription} separatorText='A propos'/>
-
-    
+                    <Description description={this.state.specieDescription.fr} separatorText='A propos'/>
+                    
                     <BasicButton text="En savoir plus" width="150" />
 
                     <Gallery galleryData={this.state.speciePhotos}/>
 
-                    {/* <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals}/> */}
+                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals}/> 
 
                 </ScrollView>
             </View>
@@ -101,3 +100,4 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 });
+

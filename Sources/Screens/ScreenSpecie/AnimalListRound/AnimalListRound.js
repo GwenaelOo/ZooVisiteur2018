@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
 import AnimalListRoundItem from './AnimalListRoundItem';
+import LargeSeparator from '../../../Components/Common/Separator/LargeSeparator';
 
 
 class AnimalListRound extends React.Component {
@@ -9,10 +10,11 @@ class AnimalListRound extends React.Component {
         let animalsOfThisSpecie = this.props.animalsOfThisSpecie
 
         const animalsOfThisSpecieArray = [];
+
         for (let animal in animalsOfThisSpecie) {
             let animalData = {
                 animalId: animalsOfThisSpecie[animal].animalId,
-                animalProfilePicture: animalsOfThisSpecie[animal].animalProfilePicture,
+                animalProfilePicture: animalsOfThisSpecie[animal].animalProfilePicture.largeThumb,
                 animalName: animalsOfThisSpecie[animal].animalName,
                 animalSex: animalsOfThisSpecie[animal].animalSex,
                 animalAge: animalsOfThisSpecie[animal].animalAge,
@@ -22,10 +24,13 @@ class AnimalListRound extends React.Component {
         }
 
         return (
+            <View>
+            <LargeSeparator text='Nos animaux' />
             <View style={styles.AnimalsList}>
                 {
                     animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId}/>; })
                 }
+            </View>
             </View>
 
         );
