@@ -67,8 +67,6 @@ class ScreenAnimation extends React.Component {
                     <View>
                         <Text>Fermeture</Text>
                     </View>
-               
-
                     <Gallery galleryData={this.state.animationPhotos} />
                 </ScrollView>
             </View>

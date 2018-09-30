@@ -32,15 +32,13 @@ class ScreenSpecie extends React.Component {
             specieProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
 
             specieDescription: '',
-            speciePhotos: [],
+            speciePhotos: {},
 
             specieName: '',
             specieLatinName: '',
 
-            specieAnimals: [],
-
             articles: []
-       
+
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
         this.getAticles = this.getAticles.bind(this)
@@ -51,7 +49,7 @@ class ScreenSpecie extends React.Component {
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-              articles: remoteData
+                articles: remoteData
             });
         });
     }
@@ -67,16 +65,15 @@ class ScreenSpecie extends React.Component {
                 specieLatinName: remoteData.specieLatinName,
                 specieDescription: remoteData.specieDescription,
                 speciePhotos: remoteData.speciePhotos,
-                specieAnimals: remoteData.specieAnimals
+                specieAnimals: remoteData.specieAnimals,
             });
         });
     }
+
     componentWillMount() {
         this.readDataFromDatabase()
         this.getAticles()
-
     }
-
     render() {
 
         return (
@@ -89,15 +86,15 @@ class ScreenSpecie extends React.Component {
                         <LightTitle text={this.state.specieLatinName} />
                     </View>
 
-                    <Description description={this.state.specieDescription.fr} separatorText='A propos'/>
-                    
+                    <Description description={this.state.specieDescription.fr} separatorText='A propos' />
+
                     <BasicButton text="En savoir plus" width="150" />
 
-                    <Gallery galleryData={this.state.speciePhotos}/>
+                    <Gallery galleryData={this.state.speciePhotos} />
 
-                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} /> 
+                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} />
 
-                    <BlogWidget articlesData={this.state.articles}/>
+                    <BlogWidget articlesData={this.state.articles} />
 
                 </ScrollView>
             </View>
