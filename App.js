@@ -18,6 +18,8 @@ import ScreenList from './Sources/Screens/ScreenList/ScreenList'
 
 import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
 
+import ScreenAnimal from './Sources/Screens/ScreenAnimal/ScreenAnimal'
+
 
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
@@ -109,6 +111,13 @@ class HomeScreen extends React.Component {
             });
           }}
         />
+                <Button
+          title="Animal Screen"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenAnimal', {
+            });
+          }}
+        />
 
       </View>
     );
@@ -149,6 +158,9 @@ const Navigator = createStackNavigator({
   },
   ScreenSpecies: {
     screen: ScreenSpecies
+  },
+  ScreenAnimal: {
+    screen: ScreenAnimal
   },
 
 
