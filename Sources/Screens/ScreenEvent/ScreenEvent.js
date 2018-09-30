@@ -7,6 +7,7 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import firebase from 'firebase';
 
@@ -26,32 +27,33 @@ class ScreenEvent extends React.Component {
             eventProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
             eventName: '',
             eventDescription: '',
-            eventPhoto: []
+            eventPhotos: {}
+
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/eventsData/' + this.props.navigation.getParam('eventId', null))
+        var ref = firebase.database().ref(config.zooId + '/eventsData/' + this.props.navigation.getParam('eventId', null))
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
                 eventName: remoteData.eventName,
                 eventProfilePicture: remoteData.eventProfilePicture,
                 eventDescription: remoteData.eventDescription,
-                eventPhotos: remoteData.eventPhotos,
+                eventPhotos: remoteData.eventPhotos || {},
             });
         });
     }
     componentWillMount() {
         this.readDataFromDatabase()
-    
+
     }
 
     render() {
         return (
-          <View style={styles.container}> 
+            <View style={styles.container}>
                 <ScrollView>
                     <ProfilePicture img={this.state.eventProfilePicture} />
                     <Header1 title={this.state.eventName} />

@@ -1,13 +1,11 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 // IMPORTATION DES ECRANS
 
 import ScreenGwenPlayground from './Sources/Screens/ScreenGwenPlayground/ScreenGwenPlayground'
 import ScreenTedPlayground from './Sources/Screens/ScreenTedPlayground/ScreenTedPlayground'
-import ScreenTest from './Sources/Screens/ScreenTest/ScreenTest'
-
 
 import ScreenEvent from './Sources/Screens/ScreenEvent/ScreenEvent'
 import ScreenService from './Sources/Screens/ScreenService/ScreenService'
@@ -22,16 +20,18 @@ import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
 import { firebaseConfig } from './config/config'
+import registerForPushNotificationsAsync from './Sources/Components/api/registerForPushNotificationsAsync'
 
 // IMPORTATION DES LIBRAIRIES
 
 import * as firebase from 'firebase';
 
 firebase.initializeApp(firebaseConfig);
+registerForPushNotificationsAsync()
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to the APP',
+    title: 'Welcome to the awesome APP',
   };
   constructor(props) {
     super(props);
@@ -39,15 +39,30 @@ class HomeScreen extends React.Component {
     };
   }
 
+  createNotificationChannel(){
+    console.log('les notifications c bon')
+    Expo.Notifications.createChannelAndroidAsync('chat-messages', {
+      name: 'BackendNotification',
+      priority: 'max',
+      sound: true,
+      vibrate: [0, 250, 250, 250],
+    });
+  }
+
+  componentWillMount(){
+    if (Platform.OS === 'android') {
+     this.createNotificationChannel()
+    }
+  }
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 
         <Button
-          title="Aller à la page specie"
+          title="ScreenSpecies"
           onPress={() => {
-            this.props.navigation.navigate('ScreenSpecie', {
-              specieId: "CHIEN1537970805"
+            this.props.navigation.navigate('ScreenSpecies', {
             });
           }}
         />
@@ -101,13 +116,7 @@ class HomeScreen extends React.Component {
             });
           }}
         />
-                <Button
-          title="ScreenSpecies"
-          onPress={() => {
-            this.props.navigation.navigate('ScreenSpecies', {
-            });
-          }}
-        />
+
       </View>
     );
   }
@@ -126,9 +135,6 @@ const Navigator = createStackNavigator({
   },
   ScreenGwenPlayground: {
     screen: ScreenGwenPlayground
-  },
-  ScreenTest: {
-    screen: ScreenTest
   },
   ScreenSpecie: {
     screen: ScreenSpecie

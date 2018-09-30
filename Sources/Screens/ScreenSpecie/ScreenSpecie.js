@@ -6,6 +6,7 @@ import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
 
 import { colors } from '../../Theme/Theme';
+import { config } from '../../../config/config'
 
 import firebase from 'firebase';
 
@@ -15,9 +16,7 @@ import Title from '../../Components/Common/Text/Title';
 import LightTitle from '../../Components/Common/Text/LightTitle';
 import BasicButton from '../../Components/Common/Button/BasicButton';
 import AnimalListRound from './AnimalListRound/AnimalListRound';
-
-
-
+import BlogWidget from '../../Components/Blog/BlogWidget';
 
 class ScreenSpecie extends React.Component {
     static navigationOptions = {
@@ -33,21 +32,32 @@ class ScreenSpecie extends React.Component {
             specieProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
 
             specieDescription: '',
-            speciePhotos: [],
+            speciePhotos: {},
+            specieAnimals: {},
 
             specieName: '',
             specieLatinName: '',
 
-            specieAnimals: []
+            articles: []
 
-       
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
+        this.getAticles = this.getAticles.bind(this)
+    }
+    getAticles() {
+        var self = this;
+        var ref = firebase.database().ref(config.zooId + '/articlesData/')
+        ref.once('value').then(snap => {
+            let remoteData = snap.val();
+            self.setState({
+                articles: remoteData
+            });
+        });
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref('AkongoFakeZoo/speciesData/' + this.state.specieId)
+        var ref = firebase.database().ref(config.zooId + '/speciesData/' + this.state.specieId)
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
@@ -55,17 +65,18 @@ class ScreenSpecie extends React.Component {
                 specieProfilePicture: remoteData.specieProfilePicture,
                 specieLatinName: remoteData.specieLatinName,
                 specieDescription: remoteData.specieDescription,
-                speciePhotos: remoteData.speciePhotos,
-                specieAnimals: remoteData.specieAnimals
+                speciePhotos: remoteData.speciePhotos || {},
+                specieAnimals: remoteData.specieAnimals || {},
             });
         });
     }
+
     componentWillMount() {
         this.readDataFromDatabase()
-
+        this.getAticles()
     }
-
     render() {
+
         return (
             <View style={styles.container}>
                 <ScrollView>
@@ -76,13 +87,15 @@ class ScreenSpecie extends React.Component {
                         <LightTitle text={this.state.specieLatinName} />
                     </View>
 
-                    <Description description={this.state.specieDescription.fr} separatorText='A propos'/>
+                    <Description description={this.state.specieDescription.fr} separatorText='A propos' />
 
                     <BasicButton text="En savoir plus" width="150" />
 
-                    <Gallery galleryData={this.state.speciePhotos}/>
+                    <Gallery galleryData={this.state.speciePhotos} />
 
-                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals}/> 
+                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} />
+
+                    <BlogWidget articlesData={this.state.articles} />
 
                 </ScrollView>
             </View>
