@@ -12,30 +12,30 @@ class AnimalListRoundItem extends React.Component {
         this.HandlePress = this.HandlePress.bind(this)
 
     }
-    
-    
+
+
     HandlePress() {
-        this.props.HandleSelection(this.props.animal.animalId)
-}
+       this.props.HandleSelection(this.props.animal.animalId)
+    }
 
 
     render() {
-console.log(this.props.animal.animalId)
+        console.log(this.props.animal.animalId)
         return (
-        <View>
-            <TouchableOpacity 
-                onPress={this.HandlePress}
-            >
-            <View style={styles.AnimalItem}>
-                    
-                    <RoundThumbnail uri={this.props.animal.animalProfilePicture} />
-                    <View style={{ marginLeft: 24 }}>
-                        <Title text={this.props.animal.animalName} size="big" />
-                        <LightTitle text={this.props.animal.animalSex + ' ' + this.props.animal.animalAge} size="big" />
+            <View>
+                <TouchableOpacity
+                    onPress={this.HandlePress}
+                >
+                    <View style={styles.AnimalItem}>
+
+                        <RoundThumbnail uri={this.props.animal.animalProfilePicture} />
+                        <View style={{ marginLeft: 24 }}>
+                            <Title text={this.props.animal.animalName} size="big" />
+                            <LightTitle text={this.props.animal.animalSex + ' ' + this.props.animal.animalAge} size="big" />
+                        </View>
                     </View>
-                </View>
-            </TouchableOpacity>
-        </View>
+                </TouchableOpacity>
+            </View>
         );
     }
 }

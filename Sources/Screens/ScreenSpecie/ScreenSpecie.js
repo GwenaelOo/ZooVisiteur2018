@@ -73,10 +73,11 @@ class ScreenSpecie extends React.Component {
     }
 
     HandleSelection(selectedAnimalId) {
-        this.props.navigation.navigate('ScreenAnimal', {
-            animalId: selectedAnimalId,
-            specieId: this.state.specieId,
-        })
+        console.log(selectedAnimalId)
+        // this.props.navigation.navigate('ScreenAnimal', {
+        //     animalId: selectedAnimalId,
+        //     specieId: this.state.specieId,
+        // })
     }
 
     componentWillMount() {
