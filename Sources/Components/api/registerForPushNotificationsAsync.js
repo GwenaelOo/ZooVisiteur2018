@@ -16,8 +16,7 @@ export default (async function registerForPushNotificationsAsync() {
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
 
-  console.log(token)
+  let tokenId = token.replace(/[^a-zA-Z ]/g, "")
 
-
- firebase.database().ref(config.zooId + '/NotificationsClients/' + uuid() ).update({ token: token });
+ firebase.database().ref(config.zooId + '/NotificationsClients/' + tokenId ).set({ token: token });
 });
