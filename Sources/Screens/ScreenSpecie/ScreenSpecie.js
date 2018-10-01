@@ -43,9 +43,9 @@ class ScreenSpecie extends React.Component {
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
         this.HandleSelection = this.HandleSelection.bind(this)
-        this.getAticles = this.getAticles.bind(this)
+        this.getArticles = this.getArticles.bind(this)
     }
-    getAticles() {
+    getArticles() {
         var self = this;
         var ref = firebase.database().ref(config.zooId + '/articlesData/')
         ref.once('value').then(snap => {
@@ -82,7 +82,7 @@ class ScreenSpecie extends React.Component {
 
     componentWillMount() {
         this.readDataFromDatabase()
-        this.getAticles()
+        this.getArticles()
     }
     render() {
 
