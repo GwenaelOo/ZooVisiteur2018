@@ -31,6 +31,7 @@ import registerForPushNotificationsAsync from './Sources/Components/api/register
 import * as firebase from 'firebase';
 
 firebase.initializeApp(firebaseConfig);
+
 registerForPushNotificationsAsync()
 
 class HomeScreen extends React.Component {
@@ -44,7 +45,6 @@ class HomeScreen extends React.Component {
   }
 
   createNotificationChannel() {
-    console.log('les notifications c bon')
     Expo.Notifications.createChannelAndroidAsync('chat-messages', {
       name: 'BackendNotification',
       priority: 'max',
