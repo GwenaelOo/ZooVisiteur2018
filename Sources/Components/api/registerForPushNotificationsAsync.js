@@ -18,9 +18,5 @@ export default (async function registerForPushNotificationsAsync() {
 
   let tokenId = token.replace(/[^a-zA-Z ]/g, "")
 
-<<<<<<< Updated upstream
  firebase.database().ref(config.zooId + '/NotificationsClients/' + tokenId ).set({ token: token });
-=======
- firebase.database().ref(config.zooId + '/NotificationsClients/' + token ).update({ token: token });
->>>>>>> Stashed changes
 });
