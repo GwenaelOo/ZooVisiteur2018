@@ -30,7 +30,7 @@ class AnimalListRound extends React.Component {
                     <LargeSeparator text='Nos animaux' />
                     <View style={styles.AnimalsList}>
                         {
-                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.HandleSelection}/>;this})
+                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.props.HandleSelection}/>},this)
                         }
                     </View>
                 </View>
