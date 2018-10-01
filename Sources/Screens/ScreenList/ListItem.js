@@ -21,7 +21,7 @@ class ListItem extends Component {
     }
 
     render() {
-        console.log(this.state.serviceData)
+        console.log('Free Gazaaaa')
         return (
             <View style={styles.container}>
 
