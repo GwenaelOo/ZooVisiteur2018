@@ -73,10 +73,11 @@ class ScreenSpecie extends React.Component {
     }
 
     HandleSelection(selectedAnimalId) {
-        this.props.navigation.navigate('ScreenAnimal', {
+         this.props.navigation.navigate('ScreenAnimal', {
             animalId: selectedAnimalId,
             specieId: this.state.specieId,
-        })
+        }) 
+
     }
 
     componentWillMount() {
@@ -103,7 +104,7 @@ class ScreenSpecie extends React.Component {
 
                     <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} HandleSelection={this.HandleSelection}/> 
                     
-                    {/* <BlogWidget articlesData={this.state.articles} /> */}
+                    <BlogWidget articlesData={this.state.articles} />
 
                 </ScrollView>
             </View>

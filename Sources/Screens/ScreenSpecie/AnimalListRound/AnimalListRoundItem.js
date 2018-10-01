@@ -13,7 +13,6 @@ class AnimalListRoundItem extends React.Component {
     
     HandlePress() {
        this.props.HandleSelection(this.props.animal.animalId)
-       
     }
 
     render() {
