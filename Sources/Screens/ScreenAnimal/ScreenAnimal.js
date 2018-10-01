@@ -4,7 +4,7 @@ import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
-
+import { config } from '../../../config/config'
 import { colors } from '../../Theme/Theme';
 
 import firebase from 'firebase';
@@ -15,6 +15,8 @@ import Title from '../../Components/Common/Text/Title';
 import LightTitle from '../../Components/Common/Text/LightTitle';
 import BasicButton from '../../Components/Common/Button/BasicButton';
 import RoundThumbnail from '../../Components/Image/RoundThumbnail';
+import BlogWidget from '../../Components/Blog/BlogWidget';
+import LargeSeparator from '../../Components/Common/Separator/LargeSeparator';
 
 class ScreenAnimal extends React.Component {
     static navigationOptions = {
@@ -26,22 +28,21 @@ class ScreenAnimal extends React.Component {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
 
-            specieId: /*'CHIEN1537970805',*/this.props.navigation.getParam('specieId', null),
-            animalId: /*'HEVEA1537970909',*/ this.props.navigation.getParam('animalId', null),
-            
-            animalProfilePicture: "http://res.cloudinary.com/akongo/image/upload/v1537970871/temp/ueufbs9ddnvpsivyyhs3.jpg",
-
+            specieId: this.props.navigation.getParam('specieId', null),
+            animalId: this.props.navigation.getParam('animalId', null),
+            animalProfilePicture: '',
             animalBiography: '',
-            /* animalProfilePicture: [], */
-
-            animalName: 'Hevea',
+            animalName: '',
             animalSex: '',
+            animalPhotos: {},
+            articles: []
        
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
+        this.getAticles = this.getAticles.bind(this)
     }
 
-     readDataFromDatabase() {
+    readDataFromDatabase() {
         var self = this;
         var ref = firebase.database().ref('AkongoFakeZoo/speciesData/' + this.state.specieId + '/specieAnimals/' + this.state.animalId)
         ref.once('value').then(snap => {
@@ -59,10 +60,20 @@ class ScreenAnimal extends React.Component {
 
     componentWillMount() {
         this.readDataFromDatabase()
+        this.getAticles()
 
     }
 
-   
+    getAticles() {
+        var self = this;
+        var ref = firebase.database().ref(config.zooId + '/articlesData/')
+        ref.once('value').then(snap => {
+            let remoteData = snap.val();
+            self.setState({
+                articles: remoteData
+            });
+        });
+    }
 
     render() {
         return (
@@ -84,6 +95,12 @@ class ScreenAnimal extends React.Component {
                     </View>
 
                     <Gallery galleryData={this.state.animalPhotos}/>
+
+                    <LargeSeparator text='Nos Animaux'/>
+
+
+
+                    <BlogWidget articlesData={this.state.articles} />
  
                 </ScrollView>
             </View>

@@ -4,20 +4,25 @@ import RoundThumbnail from '../../../Components/Image/RoundThumbnail';
 import Title from '../../../Components/Common/Text/Title';
 import LightTitle from '../../../Components/Common/Text/LightTitle';
 
-
 class AnimalListRoundItem extends React.Component {
     constructor(props) {
         super(props);
 
         this.HandlePress = this.HandlePress.bind(this)
-
     }
+<<<<<<< HEAD
 
 
     HandlePress() {
        this.props.HandleSelection(this.props.animal.animalId)
     }
 
+=======
+    
+    HandlePress() {
+       this.props.HandleSelection(this.props.animal.animalId)
+    }
+>>>>>>> 054960c7d4b2d01c532a2d4c45f4a45bf1f52acb
 
     render() {
         console.log(this.props.animal.animalId)

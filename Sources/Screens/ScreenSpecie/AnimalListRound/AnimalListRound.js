@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from 'rea
 import AnimalListRoundItem from './AnimalListRoundItem';
 import LargeSeparator from '../../../Components/Common/Separator/LargeSeparator';
 
-
 class AnimalListRound extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +31,7 @@ class AnimalListRound extends React.Component {
                     <LargeSeparator text='Nos animaux' />
                     <View style={styles.AnimalsList}>
                         {
-                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.HandleSelection} />; })
+                            animalsOfThisSpecieArray.map(function (animal) { return <AnimalListRoundItem animal={animal} key={animal.animalId} HandleSelection={this.props.HandleSelection}/>},this)
                         }
                     </View>
                 </View>
