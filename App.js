@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Platform } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform, AsyncStorage } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+
+import { config } from './config/config'
 
 // IMPORTATION DES ECRANS
 
@@ -41,7 +43,7 @@ class HomeScreen extends React.Component {
     };
   }
 
-  createNotificationChannel(){
+  createNotificationChannel() {
     console.log('les notifications c bon')
     Expo.Notifications.createChannelAndroidAsync('chat-messages', {
       name: 'BackendNotification',
@@ -51,9 +53,10 @@ class HomeScreen extends React.Component {
     });
   }
 
-  componentWillMount(){
+ 
+  componentWillMount() {
     if (Platform.OS === 'android') {
-     this.createNotificationChannel()
+      this.createNotificationChannel()
     }
   }
 
@@ -118,7 +121,7 @@ class HomeScreen extends React.Component {
             });
           }}
         />
-                <Button
+        <Button
           title="Animal Screen"
           onPress={() => {
             this.props.navigation.navigate('ScreenAnimal', {
