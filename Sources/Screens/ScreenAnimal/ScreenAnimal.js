@@ -4,10 +4,7 @@ import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
 import Button1 from '../../Components/Common/Button/Button1'
-<<<<<<< HEAD
-=======
 import { config } from '../../../config/config'
->>>>>>> fix fiche individu
 import { colors } from '../../Theme/Theme';
 
 import firebase from 'firebase';
