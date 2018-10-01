@@ -24,7 +24,7 @@ class ScreenEvent extends React.Component {
             height: Dimensions.get('window').height,
             image: '',
             titletext: 'Nom initial',
-            eventProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
+            eventProfilePicture: 'http://img95.xooimage.com/files/0/4/7/crecerelle14-40fa8fe.jpg',
             eventName: '',
             eventDescription: '',
             eventPhotos: {}
