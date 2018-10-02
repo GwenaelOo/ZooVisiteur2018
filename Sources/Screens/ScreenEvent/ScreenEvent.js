@@ -63,7 +63,6 @@ class ScreenEvent extends React.Component {
         this.setState({
             screenData: localData
         })
-
     }
 
     componentWillMount() {

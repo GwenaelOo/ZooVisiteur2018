@@ -157,7 +157,6 @@ class HomeScreen extends React.Component {
 }
 
 const Navigator = createStackNavigator({
-  // For each screen that you can navigate to, create a new entry like this:
   Home: {
     screen: HomeScreen,
   },
@@ -191,11 +190,7 @@ const Navigator = createStackNavigator({
   ScreenAnimal: {
     screen: ScreenAnimal
   },
-
-
-
-
-}, {
+},{
     initialRouteName: 'Home',
     navigationOptions: {
       headerStyle: {
@@ -208,8 +203,6 @@ const Navigator = createStackNavigator({
       },
     }
   });
-
-
 
 export default class App extends React.Component {
   render() {

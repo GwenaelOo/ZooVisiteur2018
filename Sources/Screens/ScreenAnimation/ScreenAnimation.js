@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
@@ -25,13 +25,31 @@ class ScreenAnimation extends React.Component {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
             image: '',
-            titletext: 'Nom initial',
-            animationProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
-            animationName: '',
-            animationDescription: '',
-            animationPhotos: {}
+            screenData: {
+                titletext: 'Nom initial',
+                animationProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
+                animationName: '',
+                animationDescription: '',
+                animationPhotos: {}
+            }
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
+    }
+    readDataFromLocalData = async () => {
+        console.log('Screen Animation - récupération des données locale')
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            console.log(error.message);
+            this.readDataFromDatabase()
+        }
+        localData = JSON.parse(localData)
+        localData = localData.animationsData[this.props.navigation.getParam('animationId', null)]
+
+        this.setState({
+            screenData: localData
+        })
     }
 
     readDataFromDatabase() {
@@ -40,34 +58,32 @@ class ScreenAnimation extends React.Component {
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                animationName: remoteData.animationName,
-                animationProfilePicture: remoteData.animationProfilePicture.largeThumb,
-                animationDescription: remoteData.animationDescription,
-                animationPhotos: remoteData.animationPhotos || {},
+                screenData: remoteData
             });
         });
     }
     componentWillMount() {
-        this.readDataFromDatabase()
+        this.readDataFromLocalData()
+        // this.readDataFromDatabase()
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <ProfilePicture img={this.state.animationProfilePicture} />
-                    <Header1 title={this.state.animationName} />
-                    <Description description={this.state.animationDescription} separatorText='Description' />
+                    <ProfilePicture img={this.state.screenData.animationProfilePicture} />
+                    <Header1 title={this.state.screenData.animationName} />
+                    <Description description={this.state.screenData.animationDescription} separatorText='Description' />
                     <Button1 />
 
-                    <LargeSeparator text='Horaire'/>
+                    <LargeSeparator text='Horaire' />
                     <View>
                         <Text>Ouverture</Text>
                     </View>
                     <View>
                         <Text>Fermeture</Text>
                     </View>
-                    <Gallery galleryData={this.state.animationPhotos} />
+                    {/* <Gallery galleryData={this.state.screenData.animationPhotos} /> */}
                 </ScrollView>
             </View>
         );
