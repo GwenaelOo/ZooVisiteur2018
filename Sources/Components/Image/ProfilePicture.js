@@ -8,6 +8,7 @@ class ProfilePicture extends React.Component {
     }
   
     render() {
+        console.log(this.props.img)
       return (
         <View>
             <Image

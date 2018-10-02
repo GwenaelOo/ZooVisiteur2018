@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
@@ -11,6 +11,7 @@ import { config } from '../../../config/config'
 import firebase from 'firebase';
 
 import Gallery from '../../Components/Gallery/Gallery'
+import ProfilePicture from '../../Components/Image/ProfilePicture';
 
 class ScreenTest extends React.Component {
     static navigationOptions = {
@@ -22,14 +23,34 @@ class ScreenTest extends React.Component {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
             image: '',
-            titletext: 'Nom initial',
-            serviceProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
-            serviceName: '',
-            serviceDescription: '',
-            servicePhotos: {},
-            galleryDisplay: false
+            screenData: {
+                titletext: 'Nom initial',
+                serviceProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
+                serviceName: '',
+                serviceDescription: '',
+                servicePhotos: {},
+            }
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
+        this.readDataFromLocalData = this.readDataFromLocalData.bind(this)
+    }
+
+    readDataFromLocalData = async () => {
+        console.log('Screen Service - récupération des données locale')
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            console.log(error.message);
+            this.readDataFromDatabase()
+        }
+        localData = JSON.parse(localData)
+        localData = localData.servicesData[this.props.navigation.getParam('serviceId', null)]
+
+        this.setState({
+            screenData: localData
+        })
+
     }
 
     readDataFromDatabase() {
@@ -38,26 +59,25 @@ class ScreenTest extends React.Component {
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                serviceName: remoteData.serviceName,
-                serviceProfilePicture: remoteData.serviceProfilePicture,
-                serviceDescription: remoteData.serviceDescription,
-                servicePhotos: remoteData.servicePhotos || {},
+                screenData: remoteData
             });
         });
     }
     componentWillMount() {
-        this.readDataFromDatabase()
+     //   this.readDataFromDatabase()
+     this.readDataFromLocalData()
     }
 
     render() {
+        console.log(this.state.screenData.serviceProfilePicture)
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <DefaultImage pic={this.state.serviceProfilePicture} />
-                    <Header1 title={this.state.serviceName} />
-                    <Description description={this.state.serviceDescription} />
+                    <ProfilePicture img={this.state.screenData.serviceProfilePicture} />
+                    <Header1 title={this.state.screenData.serviceName} />
+                    <Description description={this.state.screenData.serviceDescription} />
                     <Button1 />
-                    <Gallery galleryData={this.state.servicePhotos} />
+                    <Gallery galleryData={this.state.screenData.servicePhotos} />
                 </ScrollView>
             </View>
         );
