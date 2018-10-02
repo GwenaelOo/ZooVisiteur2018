@@ -21,7 +21,6 @@ class ListItem extends Component {
     }
 
     render() {
-        console.log('Free Gazaaaa')
         return (
             <View style={styles.container}>
 

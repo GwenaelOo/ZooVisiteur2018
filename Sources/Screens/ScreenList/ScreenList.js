@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import firebase from 'firebase';
 import ListItem from './ListItem';
 import { RkTabView } from 'react-native-ui-kitten';
@@ -15,25 +15,40 @@ class ScreenList extends React.Component {
         this.state = {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
-            remoteList: null,
+            dataList: null,
             dataType: this.props.navigation.getParam('dataType', null),
             listReadyToMap: []
         };
         this.handleSelection = this.handleSelection.bind(this)
         this.handleMapping = this.handleMapping.bind(this)
         this.handleTabChange = this.handleTabChange.bind(this)
+        this.readDataFromLocalData = this.readDataFromLocalData.bind(this)
+        this.updateData = this.updateData.bind(this)
     }
 
     getReferenceFromDataType(dataType) {
+        let reference
         switch (dataType) {
             case 'service':
-                return config.zooId + '/servicesData/'
+                reference = {
+                    online: config.zooId + '/servicesData/',
+                    offline: 'servicesData'
+                }
+                return reference
                 break;
             case 'event':
-                return config.zooId + '/eventsData/'
+                reference = {
+                    online: config.zooId + '/eventsData/',
+                    offline: 'servicesData'
+                }
+                return reference
                 break;
             case 'animation':
-                return config.zooId + '/animationsData/'
+                reference = {
+                    online: config.zooId + '/animationsData/',
+                    offline: 'animationsData'
+                }
+                return reference
                 break;
             default:
                 break;
@@ -43,100 +58,74 @@ class ScreenList extends React.Component {
     handleTabChange(index) {
         switch (index) {
             case 0:
-            this.readDataFromDatabase('event')
+                this.setState({
+                    dataType: 'event'
+                })
+                this.updateData()
                 break;
             case 1:
-            this.readDataFromDatabase('animation')
+                this.setState({
+                    dataType: 'animation'
+                })
+                this.updateData()
                 break;
             case 2:
-            this.readDataFromDatabase('service')
+                this.setState({
+                    dataType: 'service'
+                })
+                this.updateData()
                 break;
-
             default:
                 break;
         }
     }
 
     readDataFromDatabase(dataType) {
-
+        let remoteData
         let reference = this.getReferenceFromDataType(dataType)
         var self = this;
-        var ref = firebase.database().ref(reference)
+        var ref = firebase.database().ref(reference.online)
         ref.once('value').then(snap => {
-            let remoteData = snap.val();
-            self.setState({
-                remoteList: remoteData,
-                dataType: dataType
-            });
-        }).then(result => {
-            this.handleMapping()
-        });
+            return snap.val(); 
+        }).then(dataList => {
+            let list = this.handleMapping(dataType,dataList)
+            this.setState({
+                listReadyToMap: list
+            })
+        });  
     }
 
-    handleMapping() {
-        switch (this.state.dataType) {
-            case 'service':
-                this.setState({
-                    listReadyToMap: this.mapService()
-                })
-                break;
-            case 'animation':
-                this.setState({
-                    listReadyToMap: this.mapAnimation()
-                })
-                break;
-            case 'event':
-                this.setState({
-                    listReadyToMap: this.mapEvent()
-                })
-                break;
+    updateScreenFromLocalData(dataType){
+        let reference = this.getReferenceFromDataType(dataType)
+        let localData = this.state.localData
 
-            default:
-                break;
-        }
-    }
-
-    mapService() {
-        let remoteList = this.state.remoteList;
-        const list = [];
-        for (let item in remoteList) {
-            let itemData = {
-                itemName: remoteList[item].serviceName,
-                itemId: remoteList[item].serviceId,
-                itemPhoto: remoteList[item].serviceProfilePicture.largeThumb,
-            };
-            list.push(itemData);
-        }
+        localDataRef = localData[reference.offline]
+        let list = this.handleMapping(dataType,localDataRef)
         console.log(list)
-        return list
+        this.setState({
+            listReadyToMap: list
+        })
     }
 
-    mapEvent() {
-        let remoteList = this.state.remoteList;
-        const list = [];
-        for (let item in remoteList) {
-            let itemData = {
-                itemName: remoteList[item].eventName,
-                itemId: remoteList[item].eventId,
-                itemPhoto: remoteList[item].eventProfilePicture.largeThumb,
-            };
-            list.push(itemData);
+    readDataFromLocalData = async (dataType) => {
+        let reference = this.getReferenceFromDataType(dataType)
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            this.readDataFromDatabase(dataType)
         }
-        return list
-    }
 
-    mapAnimation() {
-        let remoteList = this.state.remoteList;
-        const list = [];
-        for (let item in remoteList) {
-            let itemData = {
-                itemName: remoteList[item].animationName,
-                itemId: remoteList[item].animationId,
-                itemPhoto: remoteList[item].animationProfilePicture.largeThumb,
-            };
-            list.push(itemData);
-        }
-        return list
+        localData = JSON.parse(localData)
+
+        this.setState({
+            localData: localData
+        })
+        localDataRef = localData[reference.offline]
+        let list = this.handleMapping(dataType,localDataRef)
+        this.setState({
+            listReadyToMap: list
+        })
     }
 
     handleSelection(itemId) {
@@ -161,23 +150,87 @@ class ScreenList extends React.Component {
         }
     }
 
-    componentWillMount() {
+    handleMapping(dataType, dataList) {
+        switch (dataType) {
+            case 'service':
+                return this.mapService(dataList)
+                break;
+            case 'animation':
+         
+                return this.mapAnimation(dataList)
+                break;
+            case 'event':
+                return this.mapEvent(dataList)
+                break;
+
+            default:
+            console.log('DataType non identifié')
+                break;
+        }
+    }
+
+    mapService(dataList) {
+        const list = [];
+        for (let item in dataList) {
+            let itemData = {
+                itemName: dataList[item].serviceName,
+                itemId: dataList[item].serviceId,
+                itemPhoto: dataList[item].serviceProfilePicture.largeThumb,
+            };
+            list.push(itemData);
+        }
+        return list
+    }
+
+    mapEvent(dataList) {
+        const list = [];
+        for (let item in dataList) {
+            let itemData = {
+                itemName: dataList[item].eventName,
+                itemId: dataList[item].eventId,
+                itemPhoto: dataList[item].eventProfilePicture.largeThumb,
+            };
+            list.push(itemData);
+        }
+        return list
+    }
+
+    mapAnimation(dataList) {
+        const list = [];
+        for (let item in dataList) {
+            let itemData = {
+                itemName: dataList[item].animationName,
+                itemId: dataList[item].animationId,
+                itemPhoto: dataList[item].animationProfilePicture.largeThumb,
+            };
+            list.push(itemData);
+        }
+        return list
+    }
+
+    updateData() {
+        //this.updateScreenFromLocalData(this.state.dataType)
         this.readDataFromDatabase(this.state.dataType)
     }
 
-    render() {
+    componentWillMount() {
+        //this.readDataFromLocalData(this.state.dataType)
+        this.readDataFromDatabase(this.state.dataType)
 
+    }
+
+    render() {
         return (
             <ScrollView>
                 <View>
                     <RkTabView rkType='material' onTabChanged={(index) => this.handleTabChange(index)}>
-                        <RkTabView.Tab title={'icon'}>
+                        <RkTabView.Tab title={'Events'}>
                             <Text></Text>
                         </RkTabView.Tab>
-                        <RkTabView.Tab title={'Restauration'}>
+                        <RkTabView.Tab title={'Services'}>
                             <Text></Text>
                         </RkTabView.Tab>
-                        <RkTabView.Tab title={'Magasins'}>
+                        <RkTabView.Tab title={'Animations'}>
                             <Text></Text>
                         </RkTabView.Tab>
                     </RkTabView>
