@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import ProfilePicture from '../../Components/Image/ProfilePicture'
 import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
@@ -22,43 +22,65 @@ class ScreenEvent extends React.Component {
         this.state = {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
+            dataReference: '/eventsData/' + this.props.navigation.getParam('eventId', null),
             image: '',
-            titletext: 'Nom initial',
-            eventProfilePicture: 'http://img95.xooimage.com/files/0/4/7/crecerelle14-40fa8fe.jpg',
-            eventName: '',
-            eventDescription: '',
-            eventPhotos: {}
-
+            screenData: {
+                titletext: 'Nom initial',
+                eventProfilePicture: '',
+                eventName: '',
+                eventDescription: '',
+                eventPhotos: {}
+            }
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
     readDataFromDatabase() {
         var self = this;
-        var ref = firebase.database().ref(config.zooId + '/eventsData/' + this.props.navigation.getParam('eventId', null))
+        var ref = firebase.database().ref(config.zooId + this.state.dataReference)
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                eventName: remoteData.eventName,
-                eventProfilePicture: remoteData.eventProfilePicture,
-                eventDescription: remoteData.eventDescription,
-                eventPhotos: remoteData.eventPhotos || {},
+                screenData: {
+                    remoteData
+                }
             });
         });
     }
+
+    readDataFromLocalData = async () => {
+        console.log('Screen Event - récupération des données locale')
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            console.log(error.message);
+            this.readDataFromDatabase()
+        }
+        localData = JSON.parse(localData)
+        localData = localData.eventsData[this.props.navigation.getParam('eventId', null)]
+
+        this.setState({
+            screenData: localData
+        })
+
+    }
+
     componentWillMount() {
-        this.readDataFromDatabase()
+        this.readDataFromLocalData()
+        //this.readDataFromDatabase()
+
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <ProfilePicture img={this.state.eventProfilePicture} />
-                    <Header1 title={this.state.eventName} />
-                    <Description description={this.state.eventDescription} />
+                    <ProfilePicture img={this.state.screenData.eventProfilePicture} />
+                    <Header1 title={this.state.screenData.eventName} />
+                    <Description description={this.state.screenData.eventDescription} />
                     <Button1 />
-                    <Gallery galleryData={this.state.eventPhotos} />
+                    <Gallery galleryData={this.state.screenData.eventPhotos} />
                 </ScrollView>
             </View>
         );

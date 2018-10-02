@@ -16,7 +16,6 @@ class AnimalListRoundItem extends React.Component {
     }
 
     render() {
-console.log(this.props.animal.animalId)
         return (
         <View>
             <TouchableOpacity 

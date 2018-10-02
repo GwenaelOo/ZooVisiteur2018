@@ -41,6 +41,8 @@ class HomeScreen extends React.Component {
     super(props);
     this.state = {
     };
+    this.storeData = this.storeData.bind(this)
+    this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
   }
 
   createNotificationChannel() {
@@ -53,11 +55,31 @@ class HomeScreen extends React.Component {
     });
   }
 
- 
+  storeData = async (remoteData) => {
+    let stringData = JSON.stringify(remoteData)
+    try {
+      await AsyncStorage.setItem('localData', stringData);
+    } catch (error) {
+      // Error saving data
+      console.log(error)
+    }
+  }
+
+  readDataFromDatabase() {
+    var self = this;
+    var ref = firebase.database().ref('AkongoFakeZoo/')
+    ref.once('value').then(snap => {
+      return snap.val();
+    }).then(data => {
+      this.storeData(data)
+    })
+  }
+
   componentWillMount() {
     if (Platform.OS === 'android') {
       this.createNotificationChannel()
     }
+    this.readDataFromDatabase()
   }
 
   render() {

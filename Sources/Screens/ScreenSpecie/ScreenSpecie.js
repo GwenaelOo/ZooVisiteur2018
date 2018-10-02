@@ -56,6 +56,7 @@ class ScreenSpecie extends React.Component {
         });
     }
 
+
     readDataFromDatabase() {
         var self = this;
         var ref = firebase.database().ref(config.zooId + '/speciesData/' + this.state.specieId)

@@ -12,7 +12,7 @@ class ProfilePicture extends React.Component {
         <View>
             <Image
                 style={{width: this.state.width, height: this.state.height}} 
-                source={{uri: this.props.img}}
+                source={{uri: this.props.img.largeThumb}}
             />
          </View>
         )
