@@ -20,6 +20,8 @@ import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
 
 import ScreenAnimal from './Sources/Screens/ScreenAnimal/ScreenAnimal'
 
+import ScreenMap from './Sources/Screens/ScreenMap/ScreenMap'
+
 import Onboarding from './Sources/Components/Onboarding/Onboarding'
 
 
@@ -130,10 +132,9 @@ class HomeScreen extends React.Component {
           }}
         />
         <Button
-          title="Aller à la page GwenPlayground"
+          title="Aller à la page Map"
           onPress={() => {
-            this.props.navigation.navigate('ScreenGwenPlayground', {
-              dataType: 'service'
+            this.props.navigation.navigate('ScreenMap', {
             });
           }}
         />
@@ -198,12 +199,15 @@ const Navigator = createStackNavigator({
   ScreenAnimal: {
     screen: ScreenAnimal
   },
+  ScreenMap: {
+    screen: ScreenMap
+  },
   Onboarding: {
     screen: Onboarding,
   },
   
 }, {
-    initialRouteName: 'Onboarding',
+    initialRouteName: 'Home',
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#FFFFFF',
