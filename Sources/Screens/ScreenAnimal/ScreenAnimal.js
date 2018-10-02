@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
@@ -27,19 +27,20 @@ class ScreenAnimal extends React.Component {
         this.state = {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
-
             specieId: this.props.navigation.getParam('specieId', null),
             animalId: this.props.navigation.getParam('animalId', null),
-            animalProfilePicture: '',
-            animalBiography: '',
-            animalName: '',
-            animalSex: '',
-            animalPhotos: {},
-            articles: []
-       
+            screenData: {
+                animalProfilePicture: '',
+                animalBiography: '',
+                animalName: '',
+                animalSex: '',
+                animalPhotos: {},
+                articles: []
+            }
+
+
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
-        this.getAticles = this.getAticles.bind(this)
     }
 
     readDataFromDatabase() {
@@ -47,32 +48,32 @@ class ScreenAnimal extends React.Component {
         var ref = firebase.database().ref('AkongoFakeZoo/speciesData/' + this.state.specieId + '/specieAnimals/' + this.state.animalId)
         ref.once('value').then(snap => {
             let remoteData = snap.val();
+            
             self.setState({
-                animalName: remoteData.animalName,
-                animalProfilePicture: remoteData.animalProfilePicture.largeThumb,
-                animalAge: remoteData.animalAge,
-                animalBiography: remoteData.animalBiography,
-                animalPhotos: remoteData.animalPhotos,
-                animalSex: remoteData.animalSex,
+                screenData: remoteData
             });
         });
+    }
+
+    readDataFromLocalData = async () => {
+        console.log('Screen Event - récupération des données locale')
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            console.log(error.message);
+            this.readDataFromDatabase()
+        }
+        localData = JSON.parse(localData)
+        localData = localData.speciesData[this.props.navigation.getParam('specieId', null)].specieAnimals[this.props.navigation.getParam('animalId', null)]
+
+        this.setState({
+            screenData: localData
+        })
     }
 
     componentWillMount() {
-        this.readDataFromDatabase()
-        this.getAticles()
-
-    }
-
-    getAticles() {
-        var self = this;
-        var ref = firebase.database().ref(config.zooId + '/articlesData/')
-        ref.once('value').then(snap => {
-            let remoteData = snap.val();
-            self.setState({
-                articles: remoteData
-            });
-        });
+        this.readDataFromLocalData()
     }
 
     render() {
@@ -80,28 +81,23 @@ class ScreenAnimal extends React.Component {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.header}>
-                    <RoundThumbnail uri={this.state.animalProfilePicture} />
-
-                    <View style={{ marginLeft: 24 }}>
-                        <Title text={this.state.animalName} />
-                        <LightTitle text={this.state.animalSex} />
+                        <ProfilePicture img={this.state.screenData.animalProfilePicture} />
+       
+                        <View style={{ marginLeft: 24 }}>
+                            <Title text={this.state.screenData.animalName} />
+                            <LightTitle text={this.state.screenData.animalSex} />
+                        </View>
                     </View>
-                    </View>
 
-                    <Description description={this.state.animalBiography} separatorText='A propos'/>
-                    
+                    <Description description={this.state.screenData.animalBiography} separatorText='A propos' />
+
                     <View style={styles.button}>
-                    <BasicButton text="En savoir plus" width={this.state.width} />
+                        <BasicButton text="En savoir plus" width={this.state.screenData.width} />
                     </View>
 
-                    <Gallery galleryData={this.state.animalPhotos}/>
+                    <Gallery galleryData={this.state.screenData.animalPhotos} />
 
-                    <LargeSeparator text='Nos Animaux'/>
-
-
-
-                    <BlogWidget articlesData={this.state.articles} />
- 
+                
                 </ScrollView>
             </View>
         );
@@ -127,7 +123,7 @@ const styles = StyleSheet.create({
     button: {
         marginLeft: 130,
         marginRight: 130,
-        
+
     }
 });
 

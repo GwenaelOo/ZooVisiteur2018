@@ -8,6 +8,10 @@ class AnimalListRound extends React.Component {
         super(props);
     }
     render() {
+        console.log('list round') 
+        if(this.props.animalsOfThisSpecie === undefined){
+            return null
+        }
         if (Object.keys(this.props.animalsOfThisSpecie).length > 0) {
             let animalsOfThisSpecie = this.props.animalsOfThisSpecie
 

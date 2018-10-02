@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
 import DefaultImage from '../../Components/Image/image';
 import Header1 from '../../Components/Common/Header/Header1'
 import Description from '../../Components/Common/Text/Description'
@@ -27,18 +27,17 @@ class ScreenSpecie extends React.Component {
         this.state = {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
-
             specieId: this.props.navigation.getParam('specieId', null),
-            specieProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
+            screenData: {
+                specieProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
+                specieDescription: '',
+                speciePhotos: {},
+                specieAnimals: {},
+                specieName: '',
+                specieLatinName: '',
+                articles: []
+            }
 
-            specieDescription: '',
-            speciePhotos: {},
-            specieAnimals: {},
-
-            specieName: '',
-            specieLatinName: '',
-
-            articles: []
 
         };
         this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
@@ -63,26 +62,39 @@ class ScreenSpecie extends React.Component {
         ref.once('value').then(snap => {
             let remoteData = snap.val();
             self.setState({
-                specieName: remoteData.specieName,
-                specieProfilePicture: remoteData.specieProfilePicture,
-                specieLatinName: remoteData.specieLatinName,
-                specieDescription: remoteData.specieDescription,
-                speciePhotos: remoteData.speciePhotos || {},
-                specieAnimals: remoteData.specieAnimals || {},
+                screenData: remoteData
             });
         });
     }
 
+    readDataFromLocalData = async () => {
+        console.log('Screen Event - récupération des données locale')
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            console.log(error.message);
+            this.readDataFromDatabase()
+        }
+        localData = JSON.parse(localData)
+        localData = localData.speciesData[this.props.navigation.getParam('specieId', null)]
+
+        this.setState({
+            screenData: localData
+        })
+    }
+
     HandleSelection(selectedAnimalId) {
-         this.props.navigation.navigate('ScreenAnimal', {
+        this.props.navigation.navigate('ScreenAnimal', {
             animalId: selectedAnimalId,
             specieId: this.state.specieId,
-        }) 
+        })
 
     }
 
     componentWillMount() {
-        this.readDataFromDatabase()
+        this.readDataFromLocalData()
+        //this.readDataFromDatabase()
         this.getArticles()
     }
     render() {
@@ -90,22 +102,22 @@ class ScreenSpecie extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    <ProfilePicture img={this.state.specieProfilePicture.largeThumb} />
+                    <ProfilePicture img={this.state.screenData.specieProfilePicture} />
 
                     <View style={{ marginLeft: 24 }}>
-                        <Title text={this.state.specieName.fr} />
-                        <LightTitle text={this.state.specieLatinName} />
+                        <Title text={this.state.screenData.specieName.fr} />
+                        <LightTitle text={this.state.screenData.specieLatinName} />
                     </View>
 
-                    <Description description={this.state.specieDescription.fr} separatorText='A propos' />
+                    <Description description={this.state.screenData.specieDescription.fr} separatorText='A propos' />
 
                     <BasicButton text="En savoir plus" width="150" />
 
-                    <Gallery galleryData={this.state.speciePhotos} />
+                    <Gallery galleryData={this.state.screenData.speciePhotos} />
 
-                    <AnimalListRound animalsOfThisSpecie={this.state.specieAnimals} HandleSelection={this.HandleSelection}/> 
-                    
-                    <BlogWidget articlesData={this.state.articles} />
+                    <AnimalListRound animalsOfThisSpecie={this.state.screenData.specieAnimals} HandleSelection={this.HandleSelection} />
+
+                    <BlogWidget articlesData={this.state.screenData.articles} />
 
                 </ScrollView>
             </View>

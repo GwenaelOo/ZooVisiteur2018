@@ -61,7 +61,6 @@ class HomeScreen extends React.Component {
       await AsyncStorage.setItem('localData', stringData);
     } catch (error) {
       // Error saving data
-      console.log(error)
     }
   }
 

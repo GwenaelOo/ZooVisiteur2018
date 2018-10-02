@@ -5,6 +5,9 @@ import LargeSeparator from '../Common/Separator/LargeSeparator';
 
 class Gallery extends React.Component {
     render() {
+        if(this.props.galleryData === undefined){
+            return null
+        }
         if (Object.keys(this.props.galleryData).length > 0) {
             let gallery = this.props.galleryData;
             let list = []

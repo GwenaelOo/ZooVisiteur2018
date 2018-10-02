@@ -9,6 +9,9 @@ class BlogWidget extends React.Component {
     }
 
     render() {
+        if (this.props.articleData === undefined){
+            return null
+        }
         let articlesList = this.props.articlesData;
 
         console.log(articlesList)
