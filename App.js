@@ -179,14 +179,14 @@ const Navigator = createStackNavigator({
     screen: ScreenAnimal
   },
   Onboarding: {
-    screen: Onboarding
+    screen: Onboarding,
   },
-
+  
 
 
 
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'Onboarding',
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#FFFFFF',
