@@ -20,6 +20,8 @@ import ScreenSpecie from './Sources/Screens/ScreenSpecie/ScreenSpecie'
 
 import ScreenAnimal from './Sources/Screens/ScreenAnimal/ScreenAnimal'
 
+import Onboarding from './Sources/Components/Onboarding/Onboarding'
+
 
 // IMPORTATION DES FICHIERS DE CONFIGURATION
 
@@ -128,6 +130,13 @@ class HomeScreen extends React.Component {
             });
           }}
         />
+                <Button
+          title="Onboarding"
+          onPress={() => {
+            this.props.navigation.navigate('Onboarding', {
+            });
+          }}
+        />
 
       </View>
     );
@@ -168,6 +177,9 @@ const Navigator = createStackNavigator({
   },
   ScreenAnimal: {
     screen: ScreenAnimal
+  },
+  Onboarding: {
+    screen: Onboarding
   },
 
 
