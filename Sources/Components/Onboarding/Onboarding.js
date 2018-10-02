@@ -1,9 +1,5 @@
-
-
 import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
-import { LinearGradient } from 'expo';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 const styles = StyleSheet.create({
@@ -24,43 +20,58 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     color: 'white',
-    backgroundColor: 'transparent',
+    backgroundColor: 'black',
+    opacity: 0.8,
+    padding: 15,
     textAlign: 'center',
     marginBottom: 16,
   }
 });
 
+
 const slides = [
   {
     key: 'somethun',
     title: 'Quick setup, good defaults',
-    text: 'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
-    /* icon: 'ios-images-outline', */
+    text: 'Bienvenue dans notre Parc !',
     image: require('../../../assets/onboarding1.jpg'),
-    colors: ['#63E2FF', '#B066FE'], 
   },
   {
     key: 'somethun1',
     title: 'Super customizable',
-    text: 'The component is also super customizable, so you can adapt it to cover your needs and wants.',
-    /* icon: 'ios-options-outline', */
+    text: 'Rencontrez nos animaux...',
     image: require('../../../assets/onboarding2.jpg'),
-    colors: ['#A3A1FF', '#3A3897'],
   },
   {
     key: 'somethun2',
-    title: 'No need to buy me beer',
-    text: 'Usage is all free',
-    /* icon: 'ios-beer-outline', */
-    image: require('../../../assets/onboarding1.jpg'),
-    colors: ['#29ABE2', '#4F00BC'],
+    title: 'no need to buy me a beer ',
+    text: 'Et profitez de nos restaurants !',
+    image: require('../../../assets/onboarding3.jpg'),
   },
 ];
 
+
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+  this.state = {
+    showRealApp: false
+  }
+  
+  }
+
+
   static navigationOptions = {
     header: null,
   };
+
+  _onDone = () => {
+    // User finished the introduction. Show real app through
+    // navigation or simply by controlling state
+    console.log('test')
+    this.props.navigation.navigate('Home', {}); 
+  }
+
   _renderItem = props => (
 <View>
   <Image
@@ -78,11 +89,8 @@ export default class App extends React.Component {
       alignItems: 'center'
     }}>
   <Text 
-    style={{
-      color: 'white',
-
-  }}>
-    Centered text
+    style={styles.title}>
+    {props.text}
   </Text>
 </View>
       
@@ -90,12 +98,13 @@ export default class App extends React.Component {
   );
 
   render() {
+
     return (
       <AppIntroSlider
         slides={slides}
         renderItem={this._renderItem}
         bottomButton
-      />
-    );
-  }
+        onDone={this._onDone}
+      />   
+    )}
 }
