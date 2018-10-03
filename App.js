@@ -216,7 +216,7 @@ const Navigator = createStackNavigator({
   },
 
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'ScreenGwenPlayground',
     // navigationOptions: {
     //   headerStyle: {
     //     backgroundColor: '#FFFFFF',

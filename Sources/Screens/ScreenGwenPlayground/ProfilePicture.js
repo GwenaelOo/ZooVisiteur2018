@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Image, Dimensions} from 'react-native';
 
-class ProfilePicture extends React.Component {
+class ProfilePictureDesign extends React.Component {
     state = {
         width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height /2,
+        height: Dimensions.get('window').height /3,
     }
   
     render() {
@@ -13,11 +13,11 @@ class ProfilePicture extends React.Component {
         <View>
             <Image
                 style={{width: this.state.width, height: this.state.height}} 
-                source={{uri: this.props.img.largeThumb}}
+                source={{uri: this.props.img}}
             />
          </View>
         )
     }
 }
 
-export default ProfilePicture
+export default ProfilePictureDesign
