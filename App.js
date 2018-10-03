@@ -207,7 +207,7 @@ const Navigator = createStackNavigator({
   },
   
 }, {
-    initialRouteName: 'Home',
+    initialRouteName: 'Onboarding',
     navigationOptions: {
       headerStyle: {
         backgroundColor: '#FFFFFF',

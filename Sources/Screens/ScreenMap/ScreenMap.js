@@ -48,7 +48,6 @@ export default class ImageOverlayWithURL extends Component {
       <View style={styles.container}>
         <MapView
           provider={this.props.provider}
-          style={styles.map}
           initialRegion={this.state.region}
         >
           <MapView.Overlay
