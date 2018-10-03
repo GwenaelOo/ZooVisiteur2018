@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Platform, AsyncStorage } from 'react-native';
+import { StyleSheet, Text, View, Button, Platform, AsyncStorage, } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import { BlurView, Constants } from 'expo';
+
 
 import { config } from './config/config'
 
@@ -132,6 +134,13 @@ class HomeScreen extends React.Component {
           }}
         />
         <Button
+          title="Aller à la page Gwen Playground"
+          onPress={() => {
+            this.props.navigation.navigate('ScreenGwenPlayground', {
+            });
+          }}
+        />
+        <Button
           title="Aller à la page Map"
           onPress={() => {
             this.props.navigation.navigate('ScreenMap', {
@@ -152,7 +161,7 @@ class HomeScreen extends React.Component {
             });
           }}
         />
-                <Button
+        <Button
           title="Onboarding"
           onPress={() => {
             this.props.navigation.navigate('Onboarding', {
@@ -176,7 +185,7 @@ const Navigator = createStackNavigator({
     screen: ScreenTedPlayground
   },
   ScreenGwenPlayground: {
-    screen: ScreenGwenPlayground
+    screen: ScreenGwenPlayground,
   },
   ScreenSpecie: {
     screen: ScreenSpecie
@@ -205,19 +214,29 @@ const Navigator = createStackNavigator({
   Onboarding: {
     screen: Onboarding,
   },
-  
+
 }, {
-    initialRouteName: 'Onboarding',
+    initialRouteName: 'Home',
+    // navigationOptions: {
+    //   headerStyle: {
+    //     backgroundColor: '#FFFFFF',
+    //   },
+    //   headerTintColor: '#5E7FB1',
+    //   headerTitleStyle: {
+    //     fontWeight: 'bold',
+    //     color: '#5E7FB1',
+    //   },
+    // }
     navigationOptions: {
-      headerStyle: {
-        backgroundColor: '#FFFFFF',
-      },
-      headerTintColor: '#5E7FB1',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        color: '#5E7FB1',
-      },
-    }
+      headerTransparent: true,
+      headerBackground: Platform.select({
+        ios: <BlurView style={{ flex: 1 }} intensity={98} />,
+        android: (
+          <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
+        ),
+      }),
+    },
+
   });
 
 export default class App extends React.Component {
