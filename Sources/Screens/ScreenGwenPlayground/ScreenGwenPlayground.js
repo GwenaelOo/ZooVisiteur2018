@@ -1,9 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions, StatusBar, Platform } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, StatusBar, Platform, AsyncStorage } from 'react-native';
 import { Header, createStackNavigator } from 'react-navigation';
-import { isIphoneX } from 'react-native-iphone-x-helper';
-import { BlurView, Constants } from 'expo';
-import ProfilePictureDesign from './ProfilePicture';
+import { BlurView, Constants, LinearGradient } from 'expo';
+import { iOSUIKit, material } from 'react-native-typography'
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import ProfilePicture from './ProfilePicture';
+import Separator from './Separator';
+import Hours from './Hours';
+import Description from './Description';
+import SeparatorWithTitle from './SeparatorWithTitle';
+import Gallery from './Gallery';
+
 
 class ScreenEvent extends React.Component {
     static navigationOptions = {
@@ -27,49 +35,65 @@ class ScreenEvent extends React.Component {
             width: Dimensions.get('window').width,
             height: Dimensions.get('window').height,
             profileHeight: Dimensions.get('window').height * 0.35,
-            profilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg'
+            screenData:{
+                profilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
+                title: 'Animation',
+                animationPhotos: {}
+            }        
         };
     }
 
-    render() {
-        return (
-            <View style={{ flex: 1 }}>
-                <Image source={{uri: this.state.profilePicture}} style={{height: this.state.profileHeight, width: this.state.width}} />
-                <View style={[styles.container, {height: this.state.profileHeight}]} />
-            </View>
-        );
+    readDataFromLocalData = async () => {
+        console.log('Screen Animation - récupération des données locale')
+        let localData = '';
+        try {
+            localData = await AsyncStorage.getItem('localData') || 'none';
+        } catch (error) {
+            console.log(error.message);
+            this.readDataFromDatabase()
+        }
+        localData = JSON.parse(localData)
+        localData = localData.animationsData["LANAGEAVECLESDAUPHINS1538608855"]
 
+        this.setState({
+            screenData: localData
+        })
     }
 
+    componentWillMount(){
+        this.readDataFromLocalData()
+    }
 
-    getHeaderInset() {
-        const NOTCH_HEIGHT = isIphoneX() ? 25 : 0;
+    render() {
+        let width = this.state.width
+        let height = this.state.height
+        let profileHeight = this.state.profileHeight
 
-        // $FlowIgnore: we will remove the HEIGHT static soon enough
-        const BASE_HEADER_HEIGHT = Header.HEIGHT;
+        return (
 
-        const HEADER_HEIGHT =
-            Platform.OS === 'ios'
-                ? BASE_HEADER_HEIGHT + NOTCH_HEIGHT
-                : BASE_HEADER_HEIGHT + Constants.statusBarHeight;
+            <ScrollView>
 
-        return Platform.select({
-            ios: {
-                contentInset: { top: HEADER_HEIGHT },
-                contentOffset: { y: -HEADER_HEIGHT },
-            },
-            android: {
-                contentContainerStyle: {
-                    paddingTop: HEADER_HEIGHT,
-                },
-            },
-        });
+                <ProfilePicture profilePicture={this.state.profilePicture} />
+
+                <Separator />
+
+                <Hours />
+
+                <Description title={this.state.title}/>
+
+                <SeparatorWithTitle />
+
+                <Gallery galleryData={this.state.screenData.animationPhotos}  />
+            </ScrollView>
+
+        );
     }
 }
+
 export default ScreenEvent
 
 const styles = StyleSheet.create({
-    container: {
+    overlay: {
         position: 'absolute',
         top: 0,
         bottom: 0,
@@ -80,13 +104,60 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         opacity: 0.55
     },
+    itemData: {
+        backgroundColor: '#016e8d',
+        position: 'relative',
+        top: -30,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 15 },
+        shadowOpacity: 0.8,
+        shadowRadius: 5,
+        elevation: 8,
+    },
+    separator: {
+        backgroundColor: '#11768a',
+        position: 'relative',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 8 },
+        shadowOpacity: 0.8,
+        shadowRadius: 3,
+        elevation: 5,
+    },
+    container: {
+        backgroundColor: 'white',
+        position: 'relative',
+        top: 0,
+    },
+    hours: {
+        flex: 5,
+        justifyContent: 'space-around',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    buttonRemind: {
+        flex: 3,
+    },
+    vignette: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    actionButtonIcon: {
+        fontSize: 20,
+        height: 22,
+        color: 'white',
+    },
 });
-
-
-//   {/* <View style={{ flex: 1, height: this.state.profileHeight}} >
-//                     <View style={{backgroundColor: 'black'}}/> */}
-//         {/* <Image style={{ height: this.state.profileHeight, width: this.state.width, position: 'absolute', top: 0, left: 0, }} source={{ uri: this.state.profilePicture }} /> */ }
-//         {/* </View> */ }
-//         {/* <View style={{ marginTop: this.state.profileHeight }}> */ }
-//         {/* <Text>kikoo</Text>
-//                 </View> */}

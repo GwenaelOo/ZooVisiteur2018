@@ -214,9 +214,9 @@ const Navigator = createStackNavigator({
   Onboarding: {
     screen: Onboarding,
   },
-
 }, {
-    initialRouteName: 'ScreenGwenPlayground',
+    initialRouteName: 'Home',
+    // initialRouteName: 'Home',
     // navigationOptions: {
     //   headerStyle: {
     //     backgroundColor: '#FFFFFF',
