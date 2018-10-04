@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, Dimensions, StyleSheet, Text } from 'react-native';
 import { iOSUIKit, material } from 'react-native-typography'
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { LinearGradient } from 'expo';
 
 class Hours extends React.Component {
@@ -15,7 +16,7 @@ class Hours extends React.Component {
 
     render() {
         return (
-            <LinearGradient colors={['#4c669f', '#016e8d']} style={[styles.itemData, { height: this.state.height * 0.15, marginLeft: this.state.width * 0.1, marginRight: this.state.width * 0.1, top: -Math.abs(this.state.height * 0.06) }]}>
+            <LinearGradient colors={['#4c669f', '#016e8d']} style={[styles.itemData, { height: hp('15%'), marginHorizontal: wp('10%'), top: -Math.abs(hp('6%')) }]}>
                 <View style={styles.vignette}>
                     <View style={styles.hours}>
                         <Text style={material.headlineWhite}>14H30</Text>

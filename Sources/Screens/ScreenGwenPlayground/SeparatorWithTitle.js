@@ -1,20 +1,18 @@
 import React from 'react';
 import { View, Image, Dimensions, StyleSheet } from 'react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { BlurView, Constants, LinearGradient } from 'expo';
 
 class SeparatorWithTitle extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-            profileHeight: Dimensions.get('window').height * 0.35,
         };
     }
     render() {
         return (
-            <View style={[styles.container, { top: -Math.abs(this.state.height * 0.15)}]}>
-            <LinearGradient colors={['#11768a', '#016e8d']} style={[styles.separator, { height: this.state.height * 0.03 }]} />
+            <View style={[styles.container, { top: -Math.abs(hp('15%'))}]}>
+            <LinearGradient colors={['#11768a', '#016e8d']} style={[styles.separator, { height: hp('3%')}]} />
             </View>
         )
     }

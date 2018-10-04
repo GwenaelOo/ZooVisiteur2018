@@ -14,7 +14,7 @@ class ProfilePictureDesign extends React.Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Image source={{ uri: this.state.profilePicture }} style={{ height: this.state.profileHeight, width: this.state.width }} />
+                <Image source={{ uri: this.props.profilePicture }} style={{ height: this.state.profileHeight, width: this.state.width }} />
                 <View style={[styles.overlay, { height: this.state.profileHeight }]} />
             </View>
         )
@@ -33,6 +33,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'black',
-        opacity: 0.55
+        opacity: 0.45
     },
 });

@@ -36,8 +36,8 @@ class ScreenEvent extends React.Component {
             height: Dimensions.get('window').height,
             profileHeight: Dimensions.get('window').height * 0.35,
             screenData:{
-                profilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
-                title: 'Animation',
+                animationProfilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
+                animationName: 'Animation',
                 animationPhotos: {}
             }        
         };
@@ -69,17 +69,18 @@ class ScreenEvent extends React.Component {
         let height = this.state.height
         let profileHeight = this.state.profileHeight
 
+        console.log(this.state.screenData.animationProfilePicture.largeThumb)
         return (
 
             <ScrollView>
 
-                <ProfilePicture profilePicture={this.state.profilePicture} />
+                <ProfilePicture profilePicture={this.state.screenData.animationProfilePicture.largeThumb} />
 
                 <Separator />
 
                 <Hours />
 
-                <Description title={this.state.title}/>
+                <Description title={this.state.screenData.animationName} text={this.state.screenData.animationDescription}/>
 
                 <SeparatorWithTitle />
 
