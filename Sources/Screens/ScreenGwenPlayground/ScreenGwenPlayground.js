@@ -3,6 +3,12 @@ import { StyleSheet, Text, View, Image, ScrollView, Dimensions, StatusBar, Platf
 import { Header, createStackNavigator } from 'react-navigation';
 import { BlurView, Constants, LinearGradient } from 'expo';
 import { iOSUIKit, material } from 'react-native-typography'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+    listenOrientationChange as loc,
+    removeOrientationListener as rol
+} from 'react-native-responsive-screen';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ProfilePicture from './ProfilePicture';
@@ -32,14 +38,11 @@ class ScreenEvent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-            profileHeight: Dimensions.get('window').height * 0.35,
-            screenData:{
+            screenData: {
                 animationProfilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
                 animationName: 'Animation',
                 animationPhotos: {}
-            }        
+            }
         };
     }
 
@@ -60,16 +63,16 @@ class ScreenEvent extends React.Component {
         })
     }
 
-    componentWillMount(){
+    componentDidMount(){  
+        loc(this)
+    }
+
+    componentWillMount() {
+        let orientation = ACTION_VOICE_CONTROL_DO_NOT_DISTURB_MODE()
         this.readDataFromLocalData()
     }
 
     render() {
-        let width = this.state.width
-        let height = this.state.height
-        let profileHeight = this.state.profileHeight
-
-        console.log(this.state.screenData.animationProfilePicture.largeThumb)
         return (
 
             <ScrollView>
@@ -80,11 +83,11 @@ class ScreenEvent extends React.Component {
 
                 <Hours />
 
-                <Description title={this.state.screenData.animationName} text={this.state.screenData.animationDescription}/>
+                <Description title={this.state.screenData.animationName} text={this.state.screenData.animationDescription} />
 
                 <SeparatorWithTitle />
 
-                <Gallery galleryData={this.state.screenData.animationPhotos}  />
+                <Gallery galleryData={this.state.screenData.animationPhotos} />
             </ScrollView>
 
         );

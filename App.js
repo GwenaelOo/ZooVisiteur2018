@@ -2,6 +2,12 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Platform, AsyncStorage, } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { BlurView, Constants } from 'expo';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+  listenOrientationChange as loc,
+  removeOrientationListener as rol
+} from 'react-native-responsive-screen';
 
 
 import { config } from './config/config'
@@ -79,15 +85,21 @@ class HomeScreen extends React.Component {
       this.storeData(data)
     })
   }
-
+  componentDidMount(){
+    console.log('fire Did mount')
+    loc(this)
+  }
   componentWillMount() {
+    console.log('fire Will mount')
+        rol()
+        
     if (Platform.OS === 'android') {
       this.createNotificationChannel()
     }
     this.readDataFromDatabase()
   }
-
   render() {
+
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
 

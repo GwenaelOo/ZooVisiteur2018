@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp,} from 'react-native-responsive-screen';
 import { BlurView, Constants, LinearGradient } from 'expo';
 import GalleryItem from './GalleryItem'
 
@@ -33,7 +33,7 @@ class Gallery extends React.Component {
             }
 
             return (
-                <LinearGradient colors={['#f5f7fa' , '#c3cfe2']} style={[styles.galleryContainer, { top: -Math.abs(hp('15%')), paddingTop: 50, paddingBottom: 150 }]}>
+                <LinearGradient colors={['#f5f7fa' , '#c3cfe2']} style={[styles.galleryContainer, { top: -Math.abs(hp('15%')), paddingBottom: hp('3%') }]}>
                     {
                         list.map(function (item) { return <GalleryItem itemData={item} key={item.itemId} />; })
                     }
