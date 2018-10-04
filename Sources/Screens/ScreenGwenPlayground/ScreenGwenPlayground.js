@@ -68,13 +68,12 @@ class ScreenEvent extends React.Component {
     }
 
     componentWillMount() {
-        let orientation = ACTION_VOICE_CONTROL_DO_NOT_DISTURB_MODE()
+        rol()
         this.readDataFromLocalData()
     }
 
     render() {
         return (
-
             <ScrollView>
 
                 <ProfilePicture profilePicture={this.state.screenData.animationProfilePicture.largeThumb} />
