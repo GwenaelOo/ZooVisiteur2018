@@ -11,13 +11,14 @@ import {
 } from 'react-native-responsive-screen';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ProfilePicture from './ProfilePicture';
-import Separator from './Separator';
-import Hours from './Hours';
-import Description from './Description';
-import SeparatorWithTitle from './SeparatorWithTitle';
-import Gallery from './Gallery';
-import returnOrientation from '../../Components/Scripts/returnOrientation'
+import isLandscape from '../../Components/Scripts/isLandscape'
+import Description from '../../Components/Common/Text/Description';
+import Gallery from '../../Components/Gallery/Gallery';
+import Separator from '../../Components/Common/Separator/Separator';
+import SeparatorWithTitle from '../../Components/Common/Separator/SeparatorWithTitle';
+import ProfilePictureDesign from '../../Components/Image/ProfilePicture';
+import ProfilePicture from '../../Components/Image/ProfilePicture';
+import Hours from '../../Components/customs/Hours';
 
 
 class ScreenEvent extends React.Component {
@@ -42,10 +43,12 @@ class ScreenEvent extends React.Component {
             screenData: {
                 animationProfilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
                 animationName: 'Animation',
-                animationPhotos: {}
+                animationPhotos: {},
+                isLandscape: isLandscape()
             }
         };
     }
+
 
     readDataFromLocalData = async () => {
         console.log('Screen Animation - récupération des données locale')
@@ -68,28 +71,31 @@ class ScreenEvent extends React.Component {
         loc(this)
     }
 
+    updateOrientation(){
+        this.setState({
+            isLandscape: isLandscape()
+        })
+    }
+
     componentWillMount() {
         rol()
+        this.updateOrientation()
         this.readDataFromLocalData()
     }
 
     render() {
-        console.log(returnOrientation())
         return (
+        <View>
             <ScrollView>
-
                 <ProfilePicture profilePicture={this.state.screenData.animationProfilePicture.largeThumb} />
-
-                <Separator />
-
                 <Hours />
-
                 <Description title={this.state.screenData.animationName} text={this.state.screenData.animationDescription} />
-
+        
                 <SeparatorWithTitle />
-
+                
                 <Gallery galleryData={this.state.screenData.animationPhotos} />
             </ScrollView>
+        </View>
 
         );
     }
