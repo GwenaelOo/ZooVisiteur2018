@@ -16,7 +16,6 @@ class Gallery extends React.Component {
         };
     }
     render() {
-        console.log(this.props.galleryData)
         if (this.props.galleryData === undefined) {
             return null
         }

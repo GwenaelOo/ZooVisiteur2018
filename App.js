@@ -85,14 +85,14 @@ class HomeScreen extends React.Component {
       this.storeData(data)
     })
   }
-  componentDidMount(){
+  componentDidMount() {
     console.log('fire Did mount')
     loc(this)
   }
   componentWillMount() {
     console.log('fire Will mount')
-        rol()
-        
+    rol()
+
     if (Platform.OS === 'android') {
       this.createNotificationChannel()
     }

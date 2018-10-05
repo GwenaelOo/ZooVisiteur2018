@@ -17,6 +17,7 @@ import Hours from './Hours';
 import Description from './Description';
 import SeparatorWithTitle from './SeparatorWithTitle';
 import Gallery from './Gallery';
+import returnOrientation from '../../Components/Scripts/returnOrientation'
 
 
 class ScreenEvent extends React.Component {
@@ -73,6 +74,7 @@ class ScreenEvent extends React.Component {
     }
 
     render() {
+        console.log(returnOrientation())
         return (
             <ScrollView>
 
