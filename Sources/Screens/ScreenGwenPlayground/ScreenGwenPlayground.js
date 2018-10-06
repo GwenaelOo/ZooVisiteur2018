@@ -19,7 +19,10 @@ import SeparatorWithTitle from '../../Components/Common/Separator/SeparatorWithT
 import ProfilePictureDesign from '../../Components/Image/ProfilePicture';
 import ProfilePicture from '../../Components/Image/ProfilePicture';
 import Hours from '../../Components/customs/Hours';
-
+import ProfilePictureBackground from '../../Components/Image/ProfilePictureBackground';
+import SpecieProfilePictureWidget from '../ScreenSpecie/SpecieProfilePictureWidget';
+import SpecieIntro from '../ScreenSpecie/SpecieIntro'
+import GalleryWithTitle from '../../Components/Gallery/GalleryWithTitle';
 
 class ScreenEvent extends React.Component {
     static navigationOptions = {
@@ -41,14 +44,14 @@ class ScreenEvent extends React.Component {
         super(props);
         this.state = {
             screenData: {
-                animationProfilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
-                animationName: 'Animation',
-                animationPhotos: {},
+                specieProfilePicture: {},
+                specieDescription: {},
+                specieName: {},
+                speciePhotos: {},
                 isLandscape: isLandscape()
             }
         };
     }
-
 
     readDataFromLocalData = async () => {
         console.log('Screen Animation - récupération des données locale')
@@ -60,18 +63,18 @@ class ScreenEvent extends React.Component {
             this.readDataFromDatabase()
         }
         localData = JSON.parse(localData)
-        localData = localData.animationsData["LANAGEAVECLESDAUPHINS1538608855"]
+        localData = localData.speciesData["CHIEN1537970805"]
 
         this.setState({
             screenData: localData
         })
     }
 
-    componentDidMount(){  
+    componentDidMount() {
         loc(this)
     }
 
-    updateOrientation(){
+    updateOrientation() {
         this.setState({
             isLandscape: isLandscape()
         })
@@ -85,88 +88,18 @@ class ScreenEvent extends React.Component {
 
     render() {
         return (
-        <View>
-            <ScrollView>
-                <ProfilePicture profilePicture={this.state.screenData.animationProfilePicture.largeThumb} />
-                <Hours />
-                <Description title={this.state.screenData.animationName} text={this.state.screenData.animationDescription} />
-                <SeparatorWithTitle />
-                <Gallery galleryData={this.state.screenData.animationPhotos} />
-            </ScrollView>
-        </View>
+            <View>
+                <ScrollView>
+                    <ProfilePictureBackground profilePicture={this.state.screenData.specieProfilePicture.largeThumb} />
+                    <SpecieProfilePictureWidget />
+                    <Separator top={hp('-15%')}/>
+                    <SpecieIntro title={this.state.screenData.specieName.fr} text={this.state.screenData.specieDescription.fr} />
+                    <GalleryWithTitle galleryData={this.state.screenData.speciePhotos} />
+                </ScrollView>
+            </View>
 
         );
     }
 }
 
 export default ScreenEvent
-
-const styles = StyleSheet.create({
-    overlay: {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'black',
-        opacity: 0.55
-    },
-    itemData: {
-        backgroundColor: '#016e8d',
-        position: 'relative',
-        top: -30,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 15 },
-        shadowOpacity: 0.8,
-        shadowRadius: 5,
-        elevation: 8,
-    },
-    separator: {
-        backgroundColor: '#11768a',
-        position: 'relative',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.8,
-        shadowRadius: 3,
-        elevation: 5,
-    },
-    container: {
-        backgroundColor: 'white',
-        position: 'relative',
-        top: 0,
-    },
-    hours: {
-        flex: 5,
-        justifyContent: 'space-around',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    buttonRemind: {
-        flex: 3,
-    },
-    vignette: {
-        flex: 1,
-        display: 'flex',
-        justifyContent: 'space-around',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    actionButtonIcon: {
-        fontSize: 20,
-        height: 22,
-        color: 'white',
-    },
-});

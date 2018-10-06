@@ -3,12 +3,12 @@ import { View, Image, Dimensions, StyleSheet, Text } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { iOSUIKit, material } from 'react-native-typography'
 import { LinearGradient } from 'expo';
-import isLandscape from '../../../Components/Scripts/isLandscape';
+import isLandscape from '../../Components/Scripts/isLandscape';
 
 let stylesPortrait
 let stylesLandscape 
 
-class Description extends React.Component {
+class SpecieIntro extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,10 +27,10 @@ class Description extends React.Component {
             container: {
                 backgroundColor: 'white',
                 position: 'relative',
-                top: -Math.abs(hp('15%')),
+                top: (hp('-15%')),
             },
             title: {
-                marginTop: hp('12%'),
+                marginTop: hp('8%'),
                 marginLeft: wp('10%')
             },
             text: {
@@ -44,7 +44,7 @@ class Description extends React.Component {
             container: {
                 backgroundColor: 'white',
                 position: 'relative',
-                top: -Math.abs(hp('20%'))
+                top: (hp('-20%'))
             },
             title: {
                 marginTop: hp('12%'),
@@ -60,7 +60,7 @@ class Description extends React.Component {
         return (
             <View style={this.getStyle().container} onLayout={this.onLayout}>
                 <View name="title" style={this.getStyle().title}>
-                    <Text style={material.title}>{this.props.title || null}</Text>
+                    <Text style={material.headline}>Le {this.props.title || null}</Text>
                 </View>
                 <View name="Description" style={this.getStyle().text}>
                     <Text style={[material.body1, { textAlign: 'justify' }]}>{this.props.text || null}</Text>
@@ -71,6 +71,6 @@ class Description extends React.Component {
     }
 }
 
-export default Description
+export default SpecieIntro
 
 
