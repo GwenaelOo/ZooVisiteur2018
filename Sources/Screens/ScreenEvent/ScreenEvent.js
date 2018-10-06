@@ -19,6 +19,7 @@ import SeparatorWithTitle from '../../Components/Common/Separator/SeparatorWithT
 import ProfilePictureDesign from '../../Components/Image/ProfilePicture';
 import ProfilePicture from '../../Components/Image/ProfilePicture';
 import Hours from '../../Components/customs/Hours';
+import GalleryWithTitle from '../../Components/Gallery/GalleryWithTitle';
 
 
 class ScreenEvent extends React.Component {
