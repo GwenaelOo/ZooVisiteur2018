@@ -90,9 +90,7 @@ class ScreenEvent extends React.Component {
                 <ProfilePicture profilePicture={this.state.screenData.animationProfilePicture.largeThumb} />
                 <Hours />
                 <Description title={this.state.screenData.animationName} text={this.state.screenData.animationDescription} />
-        
                 <SeparatorWithTitle />
-                
                 <Gallery galleryData={this.state.screenData.animationPhotos} />
             </ScrollView>
         </View>

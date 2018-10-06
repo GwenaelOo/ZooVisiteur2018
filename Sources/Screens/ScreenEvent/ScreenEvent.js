@@ -1,55 +1,57 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
-import ProfilePicture from '../../Components/Image/ProfilePicture'
-import DefaultImage from '../../Components/Image/image';
-import Header1 from '../../Components/Common/Header/Header1'
-import Description from '../../Components/Common/Text/Description'
-import Button1 from '../../Components/Common/Button/Button1'
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, StatusBar, Platform, AsyncStorage } from 'react-native';
+import { Header, createStackNavigator } from 'react-navigation';
+import { BlurView, Constants, LinearGradient } from 'expo';
+import { iOSUIKit, material } from 'react-native-typography'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+    listenOrientationChange as loc,
+    removeOrientationListener as rol
+} from 'react-native-responsive-screen';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import isLandscape from '../../Components/Scripts/isLandscape'
+import Description from '../../Components/Common/Text/Description';
+import Gallery from '../../Components/Gallery/Gallery';
+import Separator from '../../Components/Common/Separator/Separator';
+import SeparatorWithTitle from '../../Components/Common/Separator/SeparatorWithTitle';
+import ProfilePictureDesign from '../../Components/Image/ProfilePicture';
+import ProfilePicture from '../../Components/Image/ProfilePicture';
+import Hours from '../../Components/customs/Hours';
 
-import { colors } from '../../Theme/Theme';
-import { config } from '../../../config/config'
-
-import firebase from 'firebase';
-
-import Gallery from '../../Components/Gallery/Gallery'
 
 class ScreenEvent extends React.Component {
     static navigationOptions = {
-        title: 'Event Screen',
+        title: 'Gwen Screen',
+        headerTransparent: true,
+        headerBackground: Platform.select({
+            ios: <BlurView style={{ flex: 1 }} intensity={98} />,
+            android: (
+                <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0)' }} />
+            ),
+        }),
+        headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#FFFFFF'
+        },
+        headerTintColor: '#FFFFFF',
     };
     constructor(props) {
         super(props);
         this.state = {
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-            dataReference: '/eventsData/' + this.props.navigation.getParam('eventId', null),
-            image: '',
             screenData: {
-                titletext: 'Nom initial',
-                eventProfilePicture: '',
-                eventName: '',
-                eventDescription: '',
-                eventPhotos: {}
+                eventProfilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
+                eventName: 'event',
+                eventPhotos: {},
+                isLandscape: isLandscape()
             }
         };
-        this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
     }
 
-    readDataFromDatabase() {
-        var self = this;
-        var ref = firebase.database().ref(config.zooId + this.state.dataReference)
-        ref.once('value').then(snap => {
-            let remoteData = snap.val();
-            self.setState({
-                screenData: {
-                    remoteData
-                }
-            });
-        });
-    }
 
     readDataFromLocalData = async () => {
-        console.log('Screen Event - récupération des données locale')
+        console.log('Screen Animation - récupération des données locale')
         let localData = '';
         try {
             localData = await AsyncStorage.getItem('localData') || 'none';
@@ -59,40 +61,42 @@ class ScreenEvent extends React.Component {
         }
         localData = JSON.parse(localData)
         localData = localData.eventsData[this.props.navigation.getParam('eventId', null)]
-
+       
         this.setState({
             screenData: localData
         })
     }
 
-    componentWillMount() {
-        this.readDataFromLocalData()
-        //this.readDataFromDatabase()
+    componentDidMount(){  
+        loc(this)
+    }
 
+    updateOrientation(){
+        this.setState({
+            isLandscape: isLandscape()
+        })
+    }
+
+    componentWillMount() {
+        rol()
+        this.updateOrientation()
+        this.readDataFromLocalData()
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <ScrollView>
-                    <ProfilePicture img={this.state.screenData.eventProfilePicture} />
-                    <Header1 title={this.state.screenData.eventName} />
-                    <Description description={this.state.screenData.eventDescription} />
-                    <Button1 />
-                    <Gallery galleryData={this.state.screenData.eventPhotos} />
-                </ScrollView>
-            </View>
+        <View>
+            <ScrollView>
+                <ProfilePicture profilePicture={this.state.screenData.eventProfilePicture.largeThumb} />
+                <Separator />
+                <Hours />
+                <Description title={this.state.screenData.eventName} text={this.state.screenData.eventDescription} />
+                <GalleryWithTitle galleryData={this.state.screenData.eventPhotos} />
+            </ScrollView>
+        </View>
+
         );
     }
 }
 
 export default ScreenEvent
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: "100%",
-        backgroundColor: colors.BACKGROUND_COLOR,
-        alignItems: 'center',
-    },
-});

@@ -205,9 +205,6 @@ const Navigator = createStackNavigator({
   ScreenList: {
     screen: ScreenList
   },
-  ScreenEvent: {
-    screen: ScreenEvent
-  },
   ScreenService: {
     screen: ScreenService
   },

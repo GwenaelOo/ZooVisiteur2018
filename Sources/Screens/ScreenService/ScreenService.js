@@ -1,42 +1,59 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, Dimensions, AsyncStorage } from 'react-native';
-import DefaultImage from '../../Components/Image/image';
-import Header1 from '../../Components/Common/Header/Header1'
-import Description from '../../Components/Common/Text/Description'
-import Button1 from '../../Components/Common/Button/Button1'
-
-import { colors } from '../../Theme/Theme';
-import { config } from '../../../config/config'
-
-import firebase from 'firebase';
-
-import Gallery from '../../Components/Gallery/Gallery'
+import { StyleSheet, Text, View, Image, ScrollView, Dimensions, StatusBar, Platform, AsyncStorage } from 'react-native';
+import { Header, createStackNavigator } from 'react-navigation';
+import { BlurView, Constants, LinearGradient } from 'expo';
+import { iOSUIKit, material } from 'react-native-typography'
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+    listenOrientationChange as loc,
+    removeOrientationListener as rol
+} from 'react-native-responsive-screen';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
+import isLandscape from '../../Components/Scripts/isLandscape'
+import Description from '../../Components/Common/Text/Description';
+import Gallery from '../../Components/Gallery/Gallery';
+import Separator from '../../Components/Common/Separator/Separator';
+import SeparatorWithTitle from '../../Components/Common/Separator/SeparatorWithTitle';
+import ProfilePictureDesign from '../../Components/Image/ProfilePicture';
 import ProfilePicture from '../../Components/Image/ProfilePicture';
+import Hours from '../../Components/customs/Hours';
+import OpeningHours from '../../Components/customs/OpeningHours';
+import GalleryWithTitle from '../../Components/Gallery/GalleryWithTitle';
 
-class ScreenTest extends React.Component {
+
+class ScreenService extends React.Component {
     static navigationOptions = {
-        title: 'Service Screen',
+        title: 'Gwen Screen',
+        headerTransparent: true,
+        headerBackground: Platform.select({
+            ios: <BlurView style={{ flex: 1 }} intensity={98} />,
+            android: (
+                <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0)' }} />
+            ),
+        }),
+        headerTitleStyle: {
+            fontWeight: 'bold',
+            color: '#FFFFFF'
+        },
+        headerTintColor: '#FFFFFF',
     };
     constructor(props) {
         super(props);
         this.state = {
-            width: Dimensions.get('window').width,
-            height: Dimensions.get('window').height,
-            image: '',
             screenData: {
-                titletext: 'Nom initial',
-                serviceProfilePicture: 'https://hlfppt.org/wp-content/uploads/2017/04/placeholder.png',
-                serviceName: '',
-                serviceDescription: '',
+                serviceProfilePicture: 'https://images.pexels.com/photos/247478/pexels-photo-247478.jpeg?cs=srgb&dl=dawn-landscape-mountains-247478.jpg&fm=jpg',
+                serviceName: 'service',
                 servicePhotos: {},
+                isLandscape: isLandscape()
             }
         };
-        this.readDataFromDatabase = this.readDataFromDatabase.bind(this)
-        this.readDataFromLocalData = this.readDataFromLocalData.bind(this)
     }
 
+
     readDataFromLocalData = async () => {
-        console.log('Screen Service - récupération des données locale')
+        console.log('Screen Animation - récupération des données locale')
         let localData = '';
         try {
             localData = await AsyncStorage.getItem('localData') || 'none';
@@ -46,51 +63,42 @@ class ScreenTest extends React.Component {
         }
         localData = JSON.parse(localData)
         localData = localData.servicesData[this.props.navigation.getParam('serviceId', null)]
-
+       
         this.setState({
             screenData: localData
         })
-
     }
 
-    readDataFromDatabase() {
-        var self = this;
-        var ref = firebase.database().ref(config.zooId + '/servicesData/' + this.props.navigation.getParam('serviceId', null))
-        ref.once('value').then(snap => {
-            let remoteData = snap.val();
-            self.setState({
-                screenData: remoteData
-            });
-        });
+    componentDidMount(){  
+        loc(this)
     }
+
+    updateOrientation(){
+        this.setState({
+            isLandscape: isLandscape()
+        })
+    }
+
     componentWillMount() {
-     //   this.readDataFromDatabase()
-     this.readDataFromLocalData()
+        rol()
+        this.updateOrientation()
+        this.readDataFromLocalData()
     }
 
     render() {
-        console.log(this.state.screenData.serviceProfilePicture)
         return (
-            <View style={styles.container}>
-                <ScrollView>
-                    <ProfilePicture img={this.state.screenData.serviceProfilePicture} />
-                    <Header1 title={this.state.screenData.serviceName} />
-                    <Description description={this.state.screenData.serviceDescription} />
-                    <Button1 />
-                    <Gallery galleryData={this.state.screenData.servicePhotos} />
-                </ScrollView>
-            </View>
+        <View>
+            <ScrollView>
+                <ProfilePicture profilePicture={this.state.screenData.serviceProfilePicture.largeThumb} />
+                <Separator />
+                <OpeningHours />
+                <Description title={this.state.screenData.serviceName} text={this.state.screenData.serviceDescription} />
+                <GalleryWithTitle galleryData={this.state.screenData.servicePhotos} />
+            </ScrollView>
+        </View>
+
         );
     }
 }
 
-export default ScreenTest
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        width: "100%",
-        backgroundColor: colors.BACKGROUND_COLOR,
-        alignItems: 'center',
-    },
-});
+export default ScreenService

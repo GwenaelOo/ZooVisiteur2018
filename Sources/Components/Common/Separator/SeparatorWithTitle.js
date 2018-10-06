@@ -3,6 +3,7 @@ import { View, Image, Dimensions, StyleSheet } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { BlurView, Constants, LinearGradient } from 'expo';
 import isLandscape from '../../../Components/Scripts/isLandscape';
+import TitleTile from '../../customs/titleTile';
 
 class SeparatorWithTitle extends React.Component {
     constructor(props) {
@@ -56,6 +57,7 @@ class SeparatorWithTitle extends React.Component {
         return (
             <View style={this.getStyle().container}>
                 <LinearGradient colors={['#11768a', '#016e8d']} style={this.getStyle().separator} />
+                <TitleTile title={this.props.title}/>
             </View>
         )
     }

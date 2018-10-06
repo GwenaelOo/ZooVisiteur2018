@@ -129,6 +129,7 @@ class ScreenList extends React.Component {
     }
 
     handleSelection(itemId) {
+        console.log(this.state.dataType)
         switch (this.state.dataType) {
             case 'service':
                 this.props.navigation.navigate('ScreenService', {
